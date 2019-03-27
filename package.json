@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "babel components/ -d lib/ --extensions .ts,.tsx,.js,.less",
+    "compile": "antd-tools run compile",
     "storybook": "start-storybook"
   },
   "repository": {
@@ -31,8 +31,10 @@
     "@types/echarts": "^4.1.8",
     "@types/jest": "^24.0.11",
     "@types/storybook__react": "^4.0.1",
+    "antd-tools": "^7.1.2",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.5",
+    "chalk": "^2.4.2",
     "jest": "^24.5.0",
     "react-docgen-typescript-loader": "^3.0.1",
     "react-docgen-typescript-webpack-plugin": "^1.1.0",
@@ -45,6 +47,7 @@
     "@babel/polyfill": "^7.4.0",
     "antd": "^3.15.2",
     "classnames": "^2.2.6",
+    "cross-spawn": "^6.0.5",
     "css-loader": "^2.1.1",
     "echarts": "^4.2.1",
     "echarts-of-react": "^1.1.0",
