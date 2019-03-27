@@ -1,0 +1,46 @@
+.dashboard-page-row {
+  min-height: 180px;
+  transition: 0.3s;
+  background: rgba(0, 0, 0, 0.1);
+  // border-radius: 8px;
+  position: relative; // display: flex;
+  overflow: hidden;
+  &::before,
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+  &--selected {
+    background: rgba(0, 0, 0, 0.2);
+  }
+  &__operation-delete {
+    position: absolute;
+    right: 10px;
+    top: 4px;
+    cursor: pointer;
+    color: #fff;
+  }
+  &-add-col {
+    position: relative;
+    height: 180px;
+    line-height: 180px;
+    text-align: center;
+    background: #fff;
+    // border-radius: 8px;
+    cursor: pointer;
+    float: left;
+  }
+  &__select-chart {
+    &-item {
+      svg {
+        font-size: 24px;
+      }
+      margin: 4px;
+      cursor: pointer;
+      &--selected {
+        border: 1px solid #f00;
+      }
+    }
+  }
+}

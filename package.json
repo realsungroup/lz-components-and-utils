@@ -1,0 +1,60 @@
+{
+  "name": "lz-components-and-utils",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "babel components/ -d lib/ --extensions .ts,.tsx,.js,.less",
+    "storybook": "start-storybook"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/realsungroup/lz-components-and-utils.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/realsungroup/lz-components-and-utils/issues"
+  },
+  "homepage": "https://github.com/realsungroup/lz-components-and-utils#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/plugin-transform-typescript": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
+    "@storybook/addon-info": "^5.0.5",
+    "@storybook/react": "^5.0.5",
+    "@types/echarts": "^4.1.8",
+    "@types/jest": "^24.0.11",
+    "@types/storybook__react": "^4.0.1",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-loader": "^8.0.5",
+    "jest": "^24.5.0",
+    "react-docgen-typescript-loader": "^3.0.1",
+    "react-docgen-typescript-webpack-plugin": "^1.1.0",
+    "ts-jest": "^24.0.0",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.3.4000"
+  },
+  "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/polyfill": "^7.4.0",
+    "antd": "^3.15.2",
+    "classnames": "^2.2.6",
+    "css-loader": "^2.1.1",
+    "echarts": "^4.2.1",
+    "echarts-of-react": "^1.1.0",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
+    "lodash": "^4.17.11",
+    "prop-types": "^15.7.2",
+    "re-resizable": "^4.11.0",
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5",
+    "style-loader": "^0.23.1"
+  }
+}
