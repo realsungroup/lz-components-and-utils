@@ -173,23 +173,22 @@ export default class DashboardPageCol extends React.Component<any, any> {
 
     // 查看列
     const { hasData, option } = this.state;
-    if (hasData) {
-      return (
-        <DashboardChart
-          style={{ height: colItem.height }}
-          mode="view"
-          {...colItem.props}
-          option={option}
-        />
-      );
-    }
+
     return (
-      <div
-        style={{ height: colItem.height, lineHeight: colItem.height + 'px' }}
-        className="dashboard-page-col__loading-tooltip"
-      >
-        加载中...
-      </div>
+      <DashboardChart
+        style={{ height: colItem.height }}
+        mode="view"
+        {...colItem.props}
+      />
     );
+
+    // return (
+    //   <div
+    //     style={{ height: colItem.height, lineHeight: colItem.height + 'px' }}
+    //     className="dashboard-page-col__loading-tooltip"
+    //   >
+    //     加载中...
+    //   </div>
+    // );
   }
 }
