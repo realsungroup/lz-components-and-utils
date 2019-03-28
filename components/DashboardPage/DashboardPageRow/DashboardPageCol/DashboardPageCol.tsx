@@ -11,7 +11,7 @@ import http from '../../../util/api';
 /**
  * 仪表盘页面的列
  */
-export default class DashboardPageCol extends React.Component<any, any> {
+export default class DashboardPageCol extends React.PureComponent<any, any> {
   static propTypes = {
     type: PropTypes.oneOf(['add', 'row']),
     onAddRow: PropTypes.func

@@ -42,8 +42,6 @@ const optionalChartList: Array<OptionalChartInterface> = [
   }
 ];
 
-const defaultAddColSpan = 2;
-
 function getColWidth(dashboardPageWidth: number, gutter: number): number {
   return (dashboardPageWidth - 12 * gutter) / 12;
 }
@@ -51,7 +49,7 @@ function getColWidth(dashboardPageWidth: number, gutter: number): number {
 /**
  * 仪表盘页面的行
  */
-export default class DashboardPageRow extends React.Component<
+export default class DashboardPageRow extends React.PureComponent<
   DashboardPageRowProps & any,
   any
 > {
