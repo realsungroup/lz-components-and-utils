@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "start-storybook",
     "compile": "antd-tools run compile",
-    "storybook": "start-storybook"
+    "pub": "antd-tools run pub"
   },
   "repository": {
     "type": "git",
