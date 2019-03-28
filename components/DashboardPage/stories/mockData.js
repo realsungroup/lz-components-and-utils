@@ -48,7 +48,7 @@ export const rows = [
           legendVisible: true,
           tooltipVisible: true,
           toolboxVisible: true,
-          resid: 604747408409,
+          resid: 606909693662,
           records: [
             {
               F_27: 0,

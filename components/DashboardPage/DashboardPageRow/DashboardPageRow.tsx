@@ -158,9 +158,9 @@ export default class DashboardPageRow extends React.Component<
       selectedRow,
       selectedCol,
       onActiveCol,
-      onResizeStop,
       onDeleteCol,
-      dashboardPageWidth
+      dashboardPageWidth,
+      baseURL
     } = this.props;
     const { modalVisible, selectedChart, resizing } = this.state;
 
@@ -198,6 +198,7 @@ export default class DashboardPageRow extends React.Component<
               onResizeStop={this.handleResizeStop}
               onDeleteCol={onDeleteCol}
               onResize={this.handleResize}
+              baseURL={baseURL}
             />
           ))}
           {/* 添加列按钮 */}
@@ -257,7 +258,11 @@ export default class DashboardPageRow extends React.Component<
       <Row gutter={rowItem.gutter}>
         {rowItem.cols.map(colItem => (
           <Col key={colItem.id} span={colItem.span}>
-            <DashboardPageCol mode={mode} colItem={colItem} />
+            <DashboardPageCol
+              mode={mode}
+              colItem={colItem}
+              baseURL={this.props.baseURL}
+            />
           </Col>
         ))}
       </Row>

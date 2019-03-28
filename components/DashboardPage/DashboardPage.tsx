@@ -97,8 +97,9 @@ export default class DashboardPage extends React.Component<
       onResizeStop,
       onDeleteCol,
       rows,
-      onWindowResize,
-      dashboardPageWidth
+
+      dashboardPageWidth,
+      baseURL
     } = this.props;
     return (
       <Fragment>
@@ -117,6 +118,7 @@ export default class DashboardPage extends React.Component<
             onResizeStop={onResizeStop}
             onDeleteCol={onDeleteCol}
             dashboardPageWidth={dashboardPageWidth}
+            baseURL={baseURL}
           />
         ))}
         {mode === 'edit' && (
