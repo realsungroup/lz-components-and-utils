@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import './DashboardPage.less';
 import { Icon } from 'antd';
 import PropTypes from 'prop-types';
 import DashboardPageRow from './DashboardPageRow';

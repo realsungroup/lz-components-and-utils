@@ -2,6 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import AdvSearch from '../AdvSearch';
 import './index.css';
+import '../style/index.less';
 
 const testFields = [
   {

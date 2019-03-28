@@ -2,6 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import DashboardPage from '../DashboardPage';
 import './index.css';
+import '../style/index.less';
 
 storiesOf('DashboardPage 仪表盘页面', module).add('DashboardPage', () => (
   <div style={{ width: 500 }}>

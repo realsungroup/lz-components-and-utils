@@ -1,7 +1,6 @@
 import React from 'react';
 import { Select, Icon, Input, Button } from 'antd';
 import { defaultProps, propTypes } from './propTypes';
-import './AdvSearch.less';
 
 const Option = Select.Option;
 
@@ -40,25 +39,21 @@ const logicSymbolMap = {
 /**
  * 高级搜索组件
  */
-class AdvSearch extends React.Component {
+class AdvSearch extends React.Component<any, any> {
   static propTypes = propTypes;
   static defaultProps = defaultProps;
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      searchList: [
-        {
-          logicSymbol: '',
-          compareSymbol: '',
-          field: '',
-          control: 'Input',
-          value: ''
-        }
-      ] // 搜索列表
-    };
-  }
+  state = {
+    searchList: [
+      {
+        logicSymbol: '',
+        compareSymbol: '',
+        field: '',
+        control: 'Input',
+        value: ''
+      }
+    ] // 搜索列表
+  };
 
   componentDidMount = () => {};
 
