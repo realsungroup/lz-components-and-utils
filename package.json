@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook",
     "compile": "antd-tools run compile",
-    "pub": "antd-tools run pub"
+    "pub": "node scripts/publish.js"
   },
   "repository": {
     "type": "git",

@@ -4,6 +4,8 @@ import './index.css';
 import '../style/index.less';
 import http from 'lz-request/lib/http';
 
+import { rows } from './mockData';
+
 /**
  * 获取某个报表分类的所有仪表盘
  * @param {number} UniID 分类 id
@@ -21,25 +23,25 @@ export default class DashboardPageWrap extends React.Component {
     dashboardList: []
   };
 
-  componentDidMount = () => {
-    this.getData();
-  };
+  // componentDidMount = () => {
+  //   this.getData();
+  // };
 
-  getData = async () => {
-    let res;
-    try {
-      res = await http().getDashboards({ UniID: 605371353285 });
-    } catch (err) {
-      return console.error(err);
-    }
-    console.log({ resData: res.data });
-    this.setState({ dashboardList: res.data });
-  };
+  // getData = async () => {
+  //   let res;
+  //   try {
+  //     res = await http().getDashboards({ UniID: 605371353285 });
+  //   } catch (err) {
+  //     return console.error(err);
+  //   }
+  //   console.log({ resData: res.data });
+  //   this.setState({ dashboardList: res.data });
+  // };
 
   render() {
     return (
       <div>
-        <DashboardPage rows={[]} mode="view" />
+        <DashboardPage rows={rows} mode="view" />
       </div>
     );
   }
