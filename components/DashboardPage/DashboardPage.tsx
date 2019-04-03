@@ -20,7 +20,7 @@ const DEBOUNCE_WAIT = 100;
 /**
  * 仪表盘页面组件（所有的图表组成一个页面的组件）
  */
-export default class DashboardPage extends React.PureComponent<
+export default class DashboardPage extends React.Component<
   DashboardPageInterface & any,
   any
 > {

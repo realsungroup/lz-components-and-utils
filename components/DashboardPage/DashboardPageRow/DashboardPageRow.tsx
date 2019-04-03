@@ -49,7 +49,7 @@ function getColWidth(dashboardPageWidth: number, gutter: number): number {
 /**
  * 仪表盘页面的行
  */
-export default class DashboardPageRow extends React.PureComponent<
+export default class DashboardPageRow extends React.Component<
   DashboardPageRowProps & any,
   any
 > {
