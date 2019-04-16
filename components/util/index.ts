@@ -169,6 +169,8 @@ export const calcChartOptionByParams = (
   calcChartProp: boolean = true,
   calcChartDataBinding: boolean = true
 ): echarts.EChartOption => {
+  // 默认 y 轴单位 offset
+  const DEFAULT_UNIT_OFFSET = 50;
   const {
     type,
     titleVisible,
@@ -221,9 +223,11 @@ export const calcChartOptionByParams = (
   // 改变 option 中的 xAxis
   let xAxis: echarts.EChartOption.XAxis = { type: 'category' };
   // 改变 option 中的 yAxis
-  let yAxis: echarts.EChartOption.YAxis = { type: 'value' };
+  let yAxis: any = [{ type: 'value' }];
   // 改变 option 中的 series
   let series: any = [];
+  // 该表 grid 配置
+  let grid: any = { left: '10%' };
 
   // 计算数据绑定相关的配置
   if (calcChartDataBinding) {
@@ -245,12 +249,21 @@ export const calcChartOptionByParams = (
           }
         }
 
-        if (bAreaFields.length) {
-          bAreaFields.forEach(field => {
+        const bAreaFieldsLen = bAreaFields.length;
+        if (bAreaFieldsLen) {
+          grid.left = bAreaFieldsLen * DEFAULT_UNIT_OFFSET;
+          bAreaFields.forEach((field, index) => {
             const seriesObj = {
               name: field.text,
               type: type,
-              data: {}
+              data: {},
+              yAxisIndex: index
+            };
+            const yAxisObj = {
+              name: field.text,
+              type: 'value',
+              position: 'left',
+              offset: index * DEFAULT_UNIT_OFFSET
             };
             const id = field.id;
             // 未使用聚合函数
@@ -262,6 +275,7 @@ export const calcChartOptionByParams = (
               seriesObj.data = field.records.map((record: any) => record[id]);
             }
             series.push(seriesObj);
+            yAxis[index] = yAxisObj;
           });
         }
         break;
@@ -298,9 +312,8 @@ export const calcChartOptionByParams = (
           type: 'category',
           data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
         };
-        yAxis = {
-          type: 'value'
-        };
+        grid = { left: '10%' };
+        yAxis = { type: 'value' };
         series = [
           {
             name: '图例一',
@@ -311,5 +324,5 @@ export const calcChartOptionByParams = (
       }
     }
   }
-  return { ...option, xAxis, yAxis, series };
+  return { ...option, xAxis, yAxis, series, grid };
 };
