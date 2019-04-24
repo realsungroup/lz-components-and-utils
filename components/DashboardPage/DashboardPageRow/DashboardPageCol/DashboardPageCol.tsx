@@ -26,77 +26,77 @@ export default class DashboardPageCol extends React.Component<any, any> {
     if (this.props.mode !== 'view') {
       return;
     }
-    // const { settingForm } = this.props.colItem;
-    // const { resid, bAreaFields, aAreaFields, where } = settingForm;
+    const { settingForm } = this.props.colItem;
+    const { resid, bAreaFields, aAreaFields, where } = settingForm;
 
-    // const categoryFieldItem = aAreaFields[0];
-    // const categoryField = categoryFieldItem.id;
-    // const sort = categoryFieldItem.sort;
+    const categoryFieldItem = aAreaFields[0];
+    const categoryField = categoryFieldItem.id;
+    const sort = categoryFieldItem.sort;
 
-    // const pArr = bAreaFields
-    //   .map((fieldItem, index) => {
-    //     const af = fieldItem.af;
-    //     if (af) {
-    //       const valueField = fieldItem.id;
-    //       const aggregateFunctionObj = {
-    //         min: `${categoryField},min(${valueField}) ${valueField}`,
-    //         max: `${categoryField},max(${valueField}) ${valueField}`,
-    //         avg: `${categoryField},avg(${valueField}) ${valueField}`,
-    //         count: `${categoryField},count(${valueField}) ${valueField}`,
-    //         'count(distinct)': `${categoryField},count(distinct ${valueField}) ${valueField}`,
-    //         sum: `${categoryField},sum(${valueField}) ${valueField}`
-    //       };
-    //       const params: any = {
-    //         resid,
-    //         fields: aggregateFunctionObj[af],
-    //         groupby: categoryField,
-    //         cmswhere: where
-    //       };
-    //       if (sort) {
-    //         params.orderby = `${categoryField} ${sort}`;
-    //       }
-    //       return http({ baseURL: this.props.baseURL }).getFieldAggregateValue(
-    //         params
-    //       );
-    //     } else {
-    //       return http({ baseURL: this.props.baseURL }).getTable({
-    //         resid,
-    //         sortField: categoryField,
-    //         sortOrder: sort,
-    //         cmswhere: where
-    //       });
-    //     }
-    //   })
-    //   .filter(item => item);
-    // let res;
-    // try {
-    //   res = await Promise.all(pArr);
-    // } catch (err) {
-    //   console.error(err);
-    //   return message.error(err.message);
-    // }
+    const pArr = bAreaFields
+      .map((fieldItem, index) => {
+        const af = fieldItem.af;
+        if (af) {
+          const valueField = fieldItem.id;
+          const aggregateFunctionObj = {
+            min: `${categoryField},min(${valueField}) ${valueField}`,
+            max: `${categoryField},max(${valueField}) ${valueField}`,
+            avg: `${categoryField},avg(${valueField}) ${valueField}`,
+            count: `${categoryField},count(${valueField}) ${valueField}`,
+            'count(distinct)': `${categoryField},count(distinct ${valueField}) ${valueField}`,
+            sum: `${categoryField},sum(${valueField}) ${valueField}`
+          };
+          const params: any = {
+            resid,
+            fields: aggregateFunctionObj[af],
+            groupby: categoryField,
+            cmswhere: where
+          };
+          if (sort) {
+            params.orderby = `${categoryField} ${sort}`;
+          }
+          return http({ baseURL: this.props.baseURL }).getFieldAggregateValue(
+            params
+          );
+        } else {
+          return http({ baseURL: this.props.baseURL }).getTable({
+            resid,
+            sortField: categoryField,
+            sortOrder: sort,
+            cmswhere: where
+          });
+        }
+      })
+      .filter(item => item);
+    let res;
+    try {
+      res = await Promise.all(pArr);
+    } catch (err) {
+      console.error(err);
+      return message.error(err.message);
+    }
 
-    // // 修改 aAreaFields 和 bAreaFields
-    // bAreaFields.forEach((fieldItem, index) => {
-    //   // 本字段使用了聚合函数
-    //   if (fieldItem.af) {
-    //     fieldItem.sort = sort;
-    //     fieldItem.records = res[index].data;
-    //     aAreaFields[0].records = res[index].data;
-    //     aAreaFields[0].sort = sort;
-    //     // 未使用聚合函数
-    //   } else {
-    //     settingForm.records = res[index].data;
-    //     settingForm.aAreaFields[0].sort = sort;
-    //   }
-    // });
+    // 修改 aAreaFields 和 bAreaFields
+    bAreaFields.forEach((fieldItem, index) => {
+      // 本字段使用了聚合函数
+      if (fieldItem.af) {
+        fieldItem.sort = sort;
+        fieldItem.records = res[index].data;
+        aAreaFields[0].records = res[index].data;
+        aAreaFields[0].sort = sort;
+        // 未使用聚合函数
+      } else {
+        settingForm.records = res[index].data;
+        settingForm.aAreaFields[0].sort = sort;
+      }
+    });
 
-    // // 计算得到 option
-    // const option = calcChartOptionByParams({
-    //   type: this.props.colItem.chartType,
-    //   ...settingForm
-    // });
-    // this.setState({ hasData: true, option });
+    // 计算得到 option
+    const option = calcChartOptionByParams({
+      type: this.props.colItem.chartType,
+      ...settingForm
+    });
+    this.setState({ hasData: true, option });
   };
 
   handleColClick = e => {
@@ -173,12 +173,17 @@ export default class DashboardPageCol extends React.Component<any, any> {
       );
     }
 
+    if (!this.state.hasData) {
+      return <span>加载中...</span>;
+    }
+
     // 查看列
     return (
       <DashboardChart
         style={{ height: colItem.height }}
         mode="view"
         {...colItem.props}
+        option={this.state.option}
       />
     );
   }
