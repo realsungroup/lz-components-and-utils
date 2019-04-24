@@ -1,5 +1,4 @@
 import React from 'react';
-import './DashboardPageRuler.less';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 

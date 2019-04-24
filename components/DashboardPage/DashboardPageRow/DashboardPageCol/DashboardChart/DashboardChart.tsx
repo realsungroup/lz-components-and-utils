@@ -1,5 +1,4 @@
 import React from 'react';
-import './DashboardChart.less';
 import EchartsOfReact from 'echarts-of-react';
 import PropTypes from 'prop-types';
 

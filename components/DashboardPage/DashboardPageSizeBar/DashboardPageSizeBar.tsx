@@ -1,5 +1,4 @@
 import React from 'react';
-import './DashboardPageSizeBar.less';
 import { debounce } from 'lodash';
 
 const DEBOUNCE_WAIT = 200;

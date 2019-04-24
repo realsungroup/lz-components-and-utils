@@ -1,5 +1,4 @@
 import React from 'react';
-import './DashboardPageCol.less';
 import PropTypes from 'prop-types';
 import { Icon, Tooltip, Modal, message } from 'antd';
 import { calcChartOptionByParams } from '../../../util';

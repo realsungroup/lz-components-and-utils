@@ -1,5 +1,4 @@
 import React from 'react';
-import './DashboardPageRow.less';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Icon, Row, Col, Tooltip, Modal } from 'antd';
