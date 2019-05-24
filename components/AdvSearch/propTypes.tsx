@@ -18,6 +18,13 @@ export const propTypes = {
       control: PropTypes.oneOf(['Input']) // 所用控件名称
     })
   ),
+
+  /**
+   * 点确认按钮时的回调函数，如：(where) => void，where 表示 where 子句
+   * 默认：-
+   */
+  onConfirm: PropTypes.func,
+
   // 如：
   // [
   //   {
