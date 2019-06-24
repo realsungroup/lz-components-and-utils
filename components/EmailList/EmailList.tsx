@@ -15,10 +15,10 @@ export default class EmailList extends React.Component<any, any> {
     getData = async () => { console.log('getData =>')
         try {
             console.log('getData =>', http())
-            // const res = await http().getEmailTemplateList()
-            const res = await http().getTable({
-                resid: 610800378133
-              });
+            const res = await http().getEmailTemplateList({resid:610800378133});
+          //  const res = await http().getTable({
+           //     resid: 610800378133
+           //   });
             console.log('getData =>', res)
         } catch (error) {
             console.log('getData error =>', error)
@@ -31,7 +31,8 @@ export default class EmailList extends React.Component<any, any> {
 
         return (
             <Row className="email-list">
-                <Editor />
+             
+             
                 <h3>这是一个标题</h3>
                 <Form className="email-list__form" layout="inline">
                     <FormItem label="标题">
