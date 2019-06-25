@@ -7,7 +7,7 @@ interface CustomWindow extends Window {
 }
 declare let window: CustomWindow;
 
-http.setDefaultBaseURL('http://kingofdinner.realsun.me:8102/');
+http.setDefaultBaseURL('http://kingofdinner.realsun.me:5051/');
 
 // 请求拦截
 http.setRequestInterceptors(

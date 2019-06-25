@@ -8,18 +8,26 @@ const FormItem = Form.Item
 const { Option } = Select
 
 export default class EmailList extends React.Component<any, any> {
-    componentDidMount() {
 
+    state = {
+        isEditorShow: false,
+        emailData: []
     }
 
-    getData = async () => { console.log('getData =>')
+    editorRef = null
+
+    componentDidMount() {
+        this.getData()
+    }
+
+    getData = async () => { 
         try {
-            console.log('getData =>', http())
-            // const res = await http().getEmailTemplateList()
-            const res = await http().getTable({
+            const { error, data } = await http().getEmailTemplateList({
                 resid: 610800378133
-              });
-            console.log('getData =>', res)
+            })
+            if(error === 0 && data && Array.isArray(data.data)) {
+                this.setState({ emailData: data.data })
+            }
         } catch (error) {
             console.log('getData error =>', error)
         }
@@ -27,11 +35,24 @@ export default class EmailList extends React.Component<any, any> {
 
     handleSubmit = () => this.getData()
 
+    onContentEdit = (val) => { 
+        console.log('onContentEdit', val)
+        this.editorRef && this.editorRef.handleShowEditor()
+    }
+
     render() {
+
+        const { isEditorShow, emailData } = this.state
+        const { onContentEdit } = this
+
+        console.log('emailData', emailData)
 
         return (
             <Row className="email-list">
-                <Editor />
+                <Editor
+                    ref={_ => this.editorRef = _}
+                    visible={isEditorShow} 
+                />
                 <h3>这是一个标题</h3>
                 <Form className="email-list__form" layout="inline">
                     <FormItem label="标题">
@@ -75,7 +96,10 @@ export default class EmailList extends React.Component<any, any> {
                     </FormItem>
                 </Form>
                 {/* <Table dataSource={[{a:'a', b:'b'}]} /> */}
-                <EmailTable />
+                <EmailTable 
+                    data={emailData}
+                    onContentEdit={onContentEdit}
+                />
             </Row>
         )
     }

@@ -4,56 +4,29 @@ import { Table, Button } from 'antd'
 export default (props) => {
     const columns = [
         {
-          title: 'Name',
-          dataIndex: 'name',
+          title: '邮件编号',
+          dataIndex: 'ASEND_ID',
           render: text => <a href="javascript:;">{text}</a>,
         },
         {
+          title: '标题',
+          dataIndex: 'ASEND_EMAIL_TITLE'
+        },
+        {
           title: '状态',
-          dataIndex: 'age',
+          dataIndex: 'ASEND_TYPE',
         //   render: () => 
         },
         {
           title: '更新时间',
-          dataIndex: 'address',
+          dataIndex: 'ASEND_EDTTIME',
         },
         {
             title: '操作',
             dataIndex: '',
-            render: () => <Button type="link">内容配置</Button>
+            render: (val) => <Button type="link" onClick={props.onContentEdit.bind(null, val)}>内容编辑</Button>
         }
       ];
-      const data = [
-        {
-          key: '1',
-          name: 'John Brown',
-          age: 32,
-          address: 'New York No. 1 Lake Park',
-        },
-        {
-          key: '2',
-          name: 'Jim Green',
-          age: 42,
-          address: 'London No. 1 Lake Park',
-        },
-        {
-          key: '3',
-          name: 'Joe Black',
-          age: 32,
-          address: 'Sidney No. 1 Lake Park',
-        },
-        {
-          key: '4',
-          name: 'Disabled User',
-          age: 99,
-          address: 'Sidney No. 1 Lake Park',
-        },
-        {
-            key: '5',
-            name: ''
-        }
-      ];
-      
       // rowSelection object indicates the need for row selection
       const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
@@ -65,7 +38,7 @@ export default (props) => {
         }),
       };
     return (
-        <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
+        <Table rowSelection={rowSelection} columns={columns} dataSource={props.data} rowKey={({ ASEND_ID }) => ASEND_ID} />
     )
 } 
 

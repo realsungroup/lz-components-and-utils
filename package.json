@@ -55,6 +55,7 @@
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/polyfill": "^7.4.3",
+    "@notadd/neditor": "^2.1.18",
     "antd": "^3.16.5",
     "classnames": "^2.2.6",
     "cross-spawn": "^6.0.5",
@@ -64,11 +65,12 @@
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "lodash": "^4.17.11",
-    "lz-request": "^0.9.0",
+    "lz-request": "^0.9.3",
     "prop-types": "^15.7.2",
     "re-resizable": "^4.11.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "style-loader": "^0.23.1"
+    "style-loader": "^0.23.1",
+    "wangeditor": "^3.1.1"
   }
 }
