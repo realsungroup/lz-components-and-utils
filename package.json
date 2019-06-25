@@ -46,6 +46,7 @@
     "babel-loader": "^8.0.5",
     "chalk": "^2.4.2",
     "jest": "^24.7.1",
+    "lz-request": "^0.9.3",
     "react-docgen-typescript-loader": "^3.1.0",
     "react-docgen-typescript-webpack-plugin": "^1.1.0",
     "ts-jest": "^24.0.2",
@@ -65,7 +66,10 @@
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "lodash": "^4.17.11",
+<<<<<<< HEAD
     "lz-request": "^0.9.3",
+=======
+>>>>>>> a7a1f396a7da75fbe1d1ac016fa11c7833c3d3a7
     "prop-types": "^15.7.2",
     "re-resizable": "^4.11.0",
     "react": "^16.8.6",
