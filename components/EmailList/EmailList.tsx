@@ -22,21 +22,12 @@ export default class EmailList extends React.Component<any, any> {
 
     getData = async () => { 
         try {
-<<<<<<< HEAD
             const { error, data } = await http().getEmailTemplateList({
                 resid: 610800378133
             })
             if(error === 0 && data && Array.isArray(data.data)) {
                 this.setState({ emailData: data.data })
             }
-=======
-            console.log('getData =>', http())
-            const res = await http().getEmailTemplateList({resid:610800378133});
-          //  const res = await http().getTable({
-           //     resid: 610800378133
-           //   });
-            console.log('getData =>', res)
->>>>>>> a7a1f396a7da75fbe1d1ac016fa11c7833c3d3a7
         } catch (error) {
             console.log('getData error =>', error)
         }
