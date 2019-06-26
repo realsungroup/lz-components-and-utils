@@ -11,7 +11,8 @@ export default class EmailList extends React.Component<any, any> {
 
     state = {
         isEditorShow: false,
-        emailData: []
+        emailData: [],
+        selectRow: {}
     }
 
     editorRef = null
@@ -20,12 +21,12 @@ export default class EmailList extends React.Component<any, any> {
         this.getData()
     }
 
-    getData = async () => { 
+    getData = async () => {
         try {
             const { error, data } = await http().getEmailTemplateList({
                 resid: 610800378133
             })
-            if(error === 0 && data && Array.isArray(data.data)) {
+            if (error === 0 && data && Array.isArray(data.data)) {
                 this.setState({ emailData: data.data })
             }
         } catch (error) {
@@ -33,16 +34,31 @@ export default class EmailList extends React.Component<any, any> {
         }
     }
 
+    saveData = async () => {
+        try {
+            // const { error, data } = await http().
+        } catch (error) {
+            
+        }
+    }
+
     handleSubmit = () => this.getData()
 
-    onContentEdit = (val) => { 
+    onContentEdit = (val) => {
         console.log('onContentEdit', val)
         this.editorRef && this.editorRef.handleShowEditor()
+        this.setState({ selectRow: val })
+    }
+
+    onChangeEmailTitle = (val) => {
+        let { selectRow }:{ selectRow: any } = this.state
+        selectRow.ASEND_EMAIL_TITLE = val
+        this.setState({ selectRow })
     }
 
     render() {
 
-        const { isEditorShow, emailData } = this.state
+        const { isEditorShow, emailData, selectRow } = this.state
         const { onContentEdit } = this
 
         console.log('emailData', emailData)
@@ -50,8 +66,9 @@ export default class EmailList extends React.Component<any, any> {
         return (
             <Row className="email-list">
                 <Editor
+                    data={selectRow}
                     ref={_ => this.editorRef = _}
-                    visible={isEditorShow} 
+                    visible={isEditorShow}
                 />
                 <h3>这是一个标题</h3>
                 <Form className="email-list__form" layout="inline">
@@ -72,7 +89,7 @@ export default class EmailList extends React.Component<any, any> {
                         </Select>
                     </FormItem>
                     <FormItem>
-                        <Button 
+                        <Button
                             type="primary"
                             onClick={this.handleSubmit}
                         >
@@ -96,7 +113,7 @@ export default class EmailList extends React.Component<any, any> {
                     </FormItem>
                 </Form>
                 {/* <Table dataSource={[{a:'a', b:'b'}]} /> */}
-                <EmailTable 
+                <EmailTable
                     data={emailData}
                     onContentEdit={onContentEdit}
                 />

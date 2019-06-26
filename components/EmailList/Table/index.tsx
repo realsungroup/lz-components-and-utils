@@ -4,13 +4,13 @@ import { Table, Button } from 'antd'
 export default (props) => {
     const columns = [
         {
-          title: '邮件编号',
-          dataIndex: 'ASEND_ID',
+          title: '邮件标题',
+          dataIndex: 'ASEND_EMAIL_TITLE',
           render: text => <a href="javascript:;">{text}</a>,
         },
         {
           title: '标题',
-          dataIndex: 'ASEND_EMAIL_TITLE'
+          dataIndex: 'ASEND_TITLE'
         },
         {
           title: '状态',

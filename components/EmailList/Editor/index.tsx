@@ -1,10 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Modal, Form, Button, Input } from 'antd'
+import { Modal, Form, Button, Input, Select, Tabs, Radio } from 'antd'
 import WangEditor from 'wangeditor'
 
 const FormItem = Form.Item
 
+const { TabPane } = Tabs
 // declare global {
 //     interface Window { MyNamespace: any; }
 // }
@@ -16,105 +17,142 @@ const FormItem = Form.Item
 // declare var window: Window & { wangEditor: function() {} }
 
 export default class Editor extends React.Component<any, any> {
-  editorRef: React.RefObject<HTMLDivElement>
-  // editorRef:HTMLDivElement;
+    editorRef: React.RefObject<HTMLDivElement>
+    // editorRef:HTMLDivElement;
 
-  setEditorRef: any
+    editor: any
 
-  state = {
-    isEditorShow: false
-  }
+    setEditorRef: any
 
-  constructor(props) {
-    super(props)
-    // this.editorRef = React.createRef()
-    // this.editorRef = null;
-    this.setEditorRef = element => {
-      this.editorRef = element
-      console.log('setEditorRef', element)
-
-      var editor = new WangEditor(element)
-      // var editor = new WangEditor(this.editorRef.current)
-      editor.create()
+    state = {
+        isEditorShow: false,
+        isSelectOpen: false
     }
-  }
 
-  componentDidMount() {
-    console.log(
-      'componentDidMount-->',
-      this.editorRef,
-      this.refs.editorElem,
-      document.querySelector('#editor')
-    )
-    // var E = window['wangEditor']
-    // var editor = new E(this.editorRef)
-    // setTimeout(() => {
-    //     console.log('componentDidMount-22->', this.editorRef)
+    constructor(props) {
+        super(props)
+        // this.editorRef = React.createRef()
+        // this.editorRef = null;
+        this.setEditorRef = element => {
+            this.editorRef = element
+            console.log('setEditorRef', element)
 
-    //     console.log('componentDidMount-33->', ReactDOM.findDOMNode(this.editorRef))
-    //     var editor = new WangEditor(ReactDOM.findDOMNode(this.editorRef))
-    //     editor.create()
-    // }, 3000);
+            var editor = new WangEditor(element)
+            // var editor = new WangEditor(this.editorRef.current)
+            editor.create()
+            this.editor = editor
+        }
+    }
 
-    // var E = window.wangEditor
-  }
+    componentWillReceiveProps(props) {
+        if (props.data && this.editor) this.editor.txt.html(props.data.ASEND_CONTENT)
+    }
 
-  componentDidUpdate() {
-    console.log(
-      'componentDidUpdate-->',
-      this.editorRef,
-      this.refs.editorElem,
-      document.querySelector('#editor')
-    )
-  }
+    componentDidMount() {
+        console.log(
+            'componentDidMount-->',
+            this.editorRef,
+            this.refs.editorElem,
+            document.querySelector('#editor')
+        )
+        // var E = window['wangEditor']
+        // var editor = new E(this.editorRef)
+        // setTimeout(() => {
+        //     console.log('componentDidMount-22->', this.editorRef)
 
-  handleShowEditor = () => {
-    this.setState({ isEditorShow: true })
+        //     console.log('componentDidMount-33->', ReactDOM.findDOMNode(this.editorRef))
+        //     var editor = new WangEditor(ReactDOM.findDOMNode(this.editorRef))
+        //     editor.create()
+        // }, 3000);
 
-    setTimeout(() => {
-      console.log(
-        'handleShowEditor-->',
-        this.editorRef,
-        this.editorRef.current,
-        this.refs.editorElem
-      )
-      console.log('handleShowEditor-->', ReactDOM.findDOMNode(this.editorRef))
-    }, 2000)
-  }
+        // var E = window.wangEditor
+    }
 
-  handleHiddenEditor = () => this.setState({ isEditorShow: false })
+    componentDidUpdate() {
+        console.log(
+            'componentDidUpdate-->',
+            this.editorRef,
+            this.refs.editorElem,
+            document.querySelector('#editor')
+        )
+    }
 
-  render() {
-    const { isEditorShow } = this.state
-    const { handleHiddenEditor } = this
-    return (
-      <Modal visible={isEditorShow} title="xxx邮件xxx">
-        <Form layout="inline">
-          <FormItem>
-            <Input />
-          </FormItem>
-          <FormItem>
-            <Button type="primary" onClick={handleHiddenEditor}>
-              保存
+    handleShowEditor = () => {
+        this.setState({ isEditorShow: true })
+    }
+
+    handleHiddenEditor = () => this.setState({ isEditorShow: false })
+
+    handleSubmit = () => {
+
+    }
+
+    render() {
+        const { isEditorShow } = this.state
+        const { handleHiddenEditor, handleSubmit } = this
+        return (
+            <Modal visible={isEditorShow} title="xxx邮件xxx" onCancel={handleHiddenEditor}>
+                <Form layout="inline">
+                    <FormItem>
+                        <Input value={this.props.data.ASEND_EMAIL_TITLE} onChange={this.props.onChangeEmailTitle} />
+                    </FormItem>
+                    <FormItem>
+                        <Button type="primary" onClick={handleSubmit}>
+                            保存
             </Button>
-          </FormItem>
-        </Form>
-        <div
-          ref={this.setEditorRef}
-          style={{ width: 800, height: 200 }}
-          id="editor"
-        />
-        {/* <div
-          ref={this.editorRef}
-          style={{ width: 800, height: 200 }}
-          id="editor"
-        /> */}
-        {/* <div ref={(ref) => this._div = ref}></div> */}
-        <div
+                    </FormItem>
+                    <FormItem>
+                        <Select
+                            style={{ width: 300 }}
+                            notFoundContent=""
+                            open={this.state.isSelectOpen}
+                            onFocus={() => this.setState({ isSelectOpen: true })}
+                            dropdownRender={menu => (
+                                <div>
+                                    {/* onChange={callback} */}
+                                    <Tabs defaultActiveKey="1" >
+                                        <TabPane tab="Tab 1" key="1">
+                                            Content of Tab Pane 1
+                                        </TabPane>
+                                        <TabPane tab="Tab 2" key="2">
+                                            Content of Tab Pane 2
+                                            </TabPane>
+                                        <TabPane tab="Tab 3" key="3">
+                                            {/* onChange={this.onChange} value={this.state.value} */}
+                                            <Radio.Group >
+                                                <Radio value={1}>
+                                                    Option A
+                            </Radio>
+                                                <Radio value={2}>
+                                                    Option B
+                            </Radio>
+                                                <Radio value={3}>
+                                                    Option C
+                            </Radio>
+                                                <Radio value={4}>
+                                                    More...
+                            </Radio>
+                                            </Radio.Group>
+                                        </TabPane>
+                                    </Tabs>
+                                    <Button onClick={() => this.setState({ isSelectOpen: false })}>确认选择</Button>
+                                </div>
+                            )}
+                        >
+
+                        </Select>
+                    </FormItem>
+                </Form>
+                <div
+                    ref={this.setEditorRef}
+                    style={{ height: 200 }}
+                    id="editor"
+                />
+                {/* <div
           ref="editorElem"
-          style={{ textAlign: 'left', width: 900, margin: '10px auto' }}
-        />
-      </Modal>
-    )
-  }
+          style={{ textAlign: 'left', margin: '10px auto' }}
+        /> */}
+            </Modal>
+        )
+    }
 }
