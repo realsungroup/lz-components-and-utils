@@ -49,15 +49,10 @@ export default class EmailList extends React.Component<any, any> {
 
         return (
             <Row className="email-list">
-<<<<<<< HEAD
                 <Editor
                     ref={_ => this.editorRef = _}
                     visible={isEditorShow} 
                 />
-=======
-             
-             
->>>>>>> a7a1f396a7da75fbe1d1ac016fa11c7833c3d3a7
                 <h3>这是一个标题</h3>
                 <Form className="email-list__form" layout="inline">
                     <FormItem label="标题">
