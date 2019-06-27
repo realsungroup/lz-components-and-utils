@@ -11,7 +11,9 @@ export default class EmailList extends React.Component<any, any> {
   state = {
     isEditorShow: false,
     emailData: [],
-    selectRow: {}
+    cmscolumninfo: [],
+    selectRow: {},
+    stringSelect: ''
   }
 
   editorRef = null
@@ -26,7 +28,7 @@ export default class EmailList extends React.Component<any, any> {
         resid: 610800378133
       })
       if (error === 0 && data && Array.isArray(data.data)) {
-        this.setState({ emailData: data.data })
+        this.setState({ emailData: data.data, cmscolumninfo: data.cmscolumninfo })
       }
     } catch (error) {
       console.log('getData error =>', error)
@@ -66,21 +68,41 @@ export default class EmailList extends React.Component<any, any> {
     this.setState({ selectRow })
   }
 
+  onChangeEmailSelect = ({ target: { value }}) => {
+    this.setState({
+      stringSelect: value
+    })
+
+    
+  }
+
+  onSureEmailSelect = () => {
+    let { selectRow, stringSelect }: { selectRow: any, stringSelect:String } = this.state
+    // selectRow.ASEND_CONTENT += `<p>${stringSelect}</p>`
+    const arr = selectRow.ASEND_CONTENT.split('</p>')
+    selectRow.ASEND_CONTENT = arr[0] + `${stringSelect}</p>`
+    this.setState({ selectRow })
+    // this.editorRef.appendContent(`<p>${stringSelect}</p>`)
+  }
+
   render() {
-    const { isEditorShow, emailData, selectRow } = this.state
-    const { onContentEdit, saveData, onChangeEmailTitle, changeEmailContent } = this
+    const { isEditorShow, emailData, selectRow, cmscolumninfo } = this.state
+    const { onContentEdit, saveData, onChangeEmailTitle, changeEmailContent, onChangeEmailSelect, onSureEmailSelect } = this
 
     console.log('emailData', emailData)
-
+ 
     return (
       <Row className="email-list">
         <Editor
           data={selectRow}
+          cmscolumninfo={cmscolumninfo}
           ref={_ => (this.editorRef = _)}
           visible={isEditorShow}
           onSave={saveData}
           onChangeEmailTitle={onChangeEmailTitle}
           changeEmailContent={changeEmailContent}
+          onChangeEmailSelect={onChangeEmailSelect}
+          onSureEmailSelect={onSureEmailSelect}
         />
         <h3>这是一个标题</h3>
         <Form className="email-list__form" layout="inline">

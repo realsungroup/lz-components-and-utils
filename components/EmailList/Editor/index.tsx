@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Modal, Form, Button, Input, Select, Tabs, Radio } from 'antd'
 import WangEditor from 'wangeditor'
+import EmailSelect from '../Select'
 
 console.log('WangEditor=>', WangEditor)
 
@@ -53,7 +54,10 @@ export default class Editor extends React.Component<any, any> {
     }
 
     componentWillReceiveProps(props) {
-        if (props.data && this.editor) this.editor.txt.html(props.data.ASEND_CONTENT)
+        if (props.data && this.editor) {
+            console.log('componentWillReceiveProps')
+            this.editor.txt.html(props.data.ASEND_CONTENT)
+        } 
     }
 
     componentDidMount() {
@@ -96,7 +100,13 @@ export default class Editor extends React.Component<any, any> {
         typeof onSave === 'function' && onSave()
     }
 
+    appendContent = (value) => {
+        console.log('appendContent', value)
+        this.editor.txt.append(value)
+    }
+
     render() {
+        console.log('editor onChangeEmailSelect', this.props.onChangeEmailSelect)
         const { isEditorShow } = this.state
         const { handleHiddenEditor, handleSubmit } = this
         return (
@@ -111,45 +121,11 @@ export default class Editor extends React.Component<any, any> {
             </Button>
                     </FormItem>
                     <FormItem>
-                        <Select
-                            style={{ width: 300 }}
-                            notFoundContent=""
-                            open={this.state.isSelectOpen}
-                            onFocus={() => this.setState((prevState, porps) =>({ isSelectOpen: !prevState.isSelectOpen }))}
-                            dropdownRender={menu => ( 
-                                <div>
-                                    {/* onChange={callback} */}
-                                    <Tabs defaultActiveKey="1" >
-                                        <TabPane tab="Tab 1" key="1">
-                                            Content of Tab Pane 1
-                                        </TabPane>
-                                        <TabPane tab="Tab 2" key="2">
-                                            Content of Tab Pane 2
-                                            </TabPane>
-                                        <TabPane tab="Tab 3" key="3">
-                                            {/* onChange={this.onChange} value={this.state.value} */}
-                                            <Radio.Group >
-                                                <Radio value={1}>
-                                                    Option A
-                            </Radio>
-                                                <Radio value={2}>
-                                                    Option B
-                            </Radio>
-                                                <Radio value={3}>
-                                                    Option C
-                            </Radio>
-                                                <Radio value={4}>
-                                                    More...
-                            </Radio>
-                                            </Radio.Group>
-                                        </TabPane>
-                                    </Tabs>
-                                    <Button onClick={() => this.setState({ isSelectOpen: false })}>确认选择</Button>
-                                </div>
-                            )}
-                        >
-
-                        </Select>
+                        <EmailSelect 
+                            data={this.props.cmscolumninfo} 
+                            onChange={this.props.onChangeEmailSelect} 
+                            onClick={this.props.onSureEmailSelect}
+                        />
                     </FormItem>
                 </Form>
                 <div
