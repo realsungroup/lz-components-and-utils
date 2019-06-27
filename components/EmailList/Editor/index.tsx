@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom'
 import { Modal, Form, Button, Input, Select, Tabs, Radio } from 'antd'
 import WangEditor from 'wangeditor'
 
+console.log('WangEditor=>', WangEditor)
+
 const FormItem = Form.Item
 
 const { TabPane } = Tabs
 // declare global {
 //     interface Window { MyNamespace: any; }
-// }
+// } 
 
 // window.MyNamespace = window.MyNamespace || {};
 
@@ -39,6 +41,12 @@ export default class Editor extends React.Component<any, any> {
 
             var editor = new WangEditor(element)
             // var editor = new WangEditor(this.editorRef.current)
+            editor.customConfig.onchange = html => {
+                // html 即变化之后的内容
+                console.log(html)
+                const { changeEmailContent } = this.props
+                typeof changeEmailContent === 'function' && changeEmailContent(html)
+            }
             editor.create()
             this.editor = editor
         }
@@ -84,7 +92,8 @@ export default class Editor extends React.Component<any, any> {
     handleHiddenEditor = () => this.setState({ isEditorShow: false })
 
     handleSubmit = () => {
-
+        const { onSave } = this.props
+        typeof onSave === 'function' && onSave()
     }
 
     render() {
@@ -106,8 +115,8 @@ export default class Editor extends React.Component<any, any> {
                             style={{ width: 300 }}
                             notFoundContent=""
                             open={this.state.isSelectOpen}
-                            onFocus={() => this.setState({ isSelectOpen: true })}
-                            dropdownRender={menu => (
+                            onFocus={() => this.setState((prevState, porps) =>({ isSelectOpen: !prevState.isSelectOpen }))}
+                            dropdownRender={menu => ( 
                                 <div>
                                     {/* onChange={callback} */}
                                     <Tabs defaultActiveKey="1" >
