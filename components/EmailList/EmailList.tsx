@@ -58,6 +58,7 @@ export default class EmailList extends React.Component<any, any> {
       if (error === 0) {
         message.success('保存成功')
         this.editorRef.handleHiddenEditor()
+        this.getData()
       } else throw new Error('保存数据失败')
     } catch (error) {
       message.error(error.message || '系统异常')
@@ -77,12 +78,13 @@ export default class EmailList extends React.Component<any, any> {
       isToString
         ? (ASEND_CONTENT = ASEND_CONTENT.replace(
             new RegExp(ColDispName, 'g'),
-            ColName
+            '[' + ColName + ']'
           ))
         : (ASEND_CONTENT = ASEND_CONTENT.replace(
-            new RegExp(ColName, 'g'),
+            eval('/^\[' + ColName + '\]$/g'),
             ColDispName
           ))
+          console.log('ASEND_CONTENT', ASEND_CONTENT)
     })
     selectRow.ASEND_CONTENT = ASEND_CONTENT
     this.setState({ selectRow })
