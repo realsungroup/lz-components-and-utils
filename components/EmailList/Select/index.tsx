@@ -68,12 +68,13 @@ export default class EmailSelect extends React.Component<EmailSelectProps, any> 
         style={{ width: 220 }}
         notFoundContent=""
         open={isSelectOpen}
+        placeholder="插入字段"
         onFocus={handleToggleSelect}
         dropdownRender={menu => (
           <div>
-            <Tabs defaultActiveKey="1">
-              {Object.keys(mapData).map(item => (
-                <TabPane tab={item} key={item}>
+            <Tabs defaultActiveKey="0">
+              {Object.keys(mapData).map((item, index) => (
+                <TabPane tab={item} key={String(index)}>
                   <Radio.Group onChange={onChange}>
                     {mapData[item].map(({ ColDispName, ColName }) => (
                       <Radio 
