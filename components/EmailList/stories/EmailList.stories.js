@@ -3,4 +3,4 @@ import { storiesOf } from '@storybook/react';
 import EmailList from '../EmailList';
 import '../style/index.less'
 
-storiesOf('邮件列表', module).add('邮件列表', () => <EmailList />)
+storiesOf('邮件列表', module).add('邮件列表', () => <EmailList resid={610800378133} />)

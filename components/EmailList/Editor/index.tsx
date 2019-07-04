@@ -1,6 +1,6 @@
 import React from 'react'
 import { Modal, Form, Button, Input } from 'antd'
-import WangEditor from 'wangeditor'
+import LZWangEditor from '../LZWangEditor'
 import EmailSelect from '../Select'
 import './index.less'
 
@@ -17,11 +17,7 @@ interface EditorProps {
 }
 
 export default class Editor extends React.Component<EditorProps, any> {
-  editorRef: React.RefObject<HTMLDivElement>
-
-  editor: any
-
-  setEditorRef: any
+  editorRef: any
 
   selectRef: any
 
@@ -32,20 +28,7 @@ export default class Editor extends React.Component<EditorProps, any> {
 
   constructor(props) {
     super(props)
-    this.setEditorRef = element => {
-      this.editorRef = element
-
-      var editor = new WangEditor(element)
-      editor.customConfig.onchange = html => {
-        // html 即变化之后的内容
-        const { changeEmailContent } = this.props
-        typeof changeEmailContent === 'function' && changeEmailContent(html)
-      }
-      editor.create()
-      this.editor = editor
-      // 设置初始内容
-      this.editor.txt.html(this.props.data.ASEND_CONTENT)
-    }
+    
   }
 
   /**
@@ -85,7 +68,8 @@ export default class Editor extends React.Component<EditorProps, any> {
         onChangeEmailTitle,
         cmscolumninfo,
         onChangeEmailSelect,
-        onSureEmailSelect
+        onSureEmailSelect,
+        changeEmailContent
       }
     } = this
     return (
@@ -118,10 +102,10 @@ export default class Editor extends React.Component<EditorProps, any> {
             </Button>
           </FormItem>
         </Form>
-        <div
-          className="email-editor__editor"
-          ref={this.setEditorRef}
-          id="editor"
+        <LZWangEditor 
+          ref={_ => this.editorRef = _}
+          content={data.ASEND_CONTENT}
+          changeEmailContent={changeEmailContent}
         />
       </Modal>
     )

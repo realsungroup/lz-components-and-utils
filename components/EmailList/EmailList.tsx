@@ -5,12 +5,17 @@ import Editor from './Editor'
 import Menu from './Menu'
 import http from '../util/api'
 
-export default class EmailList extends React.Component<any, any> {
+interface EmailListProps {
+  resid: Number
+}
+
+export default class EmailList extends React.Component<EmailListProps, any> {
   state = {
+    title: '', // 邮件标题
     emailData: [], // 邮件列表内容
     cmscolumninfo: [], // 字段列表
     selectRow: {}, // 列表某行数据选中
-    stringSelect: '' // 选中的字段
+    stringSelect: '', // 选中的字段
   }
 
   // 编辑框ref
@@ -27,13 +32,13 @@ export default class EmailList extends React.Component<any, any> {
    */
   getData = async () => {
     try {
-      const { error, data } = await http().getEmailTemplateList({
-        resid: 610800378133
-      })
+      const { resid } = this.props
+      const { error, data } = await http().getEmailTemplateList({ resid })
       if (error === 0 && data && Array.isArray(data.data)) {
         this.setState({
           emailData: data.data,
-          cmscolumninfo: data.cmscolumninfo
+          cmscolumninfo: data.cmscolumninfo,
+          title: data.resdata.ResName
         })
       } else throw new Error('获取数据失败')
     } catch (error) {
@@ -57,7 +62,7 @@ export default class EmailList extends React.Component<any, any> {
       })
       if (error === 0) {
         message.success('保存成功')
-        this.editorRef.handleHiddenEditor()
+        this.editorRef && this.editorRef.handleHiddenEditor()
         this.getData()
       } else throw new Error('保存数据失败')
     } catch (error) {
@@ -68,7 +73,7 @@ export default class EmailList extends React.Component<any, any> {
   /**
    * 转换字段
    *
-   * @param isToString ture 字段 => 中文 | false 中文 => 字段
+   * @param isToString false 字段 => 中文 | true 中文 => 字段
    * @memberof EmailList
    */
   transformSomeString = (isToString: Boolean) => {
@@ -81,10 +86,9 @@ export default class EmailList extends React.Component<any, any> {
             '[' + ColName + ']'
           ))
         : (ASEND_CONTENT = ASEND_CONTENT.replace(
-            eval('/^\[' + ColName + '\]$/g'),
+            eval('/\\[' + ColName + '\\]/g'),
             ColDispName
           ))
-          console.log('ASEND_CONTENT', ASEND_CONTENT)
     })
     selectRow.ASEND_CONTENT = ASEND_CONTENT
     this.setState({ selectRow })
@@ -152,11 +156,11 @@ export default class EmailList extends React.Component<any, any> {
    */
   onSureEmailSelect = () => {
     let { stringSelect }: { stringSelect: String } = this.state
-    this.editorRef.editor.cmd.do('insertHTML', `<span>${stringSelect}</span>`)
+    this.editorRef.editorRef && this.editorRef.editorRef.editor.cmd.do('insertHTML', `<span>${stringSelect}</span>`)
   }
 
   render() {
-    const { emailData, selectRow, cmscolumninfo } = this.state
+    const { title, emailData, selectRow, cmscolumninfo } = this.state
     const {
       onContentEdit,
       onSubmit,
@@ -179,8 +183,8 @@ export default class EmailList extends React.Component<any, any> {
           onChangeEmailSelect={onChangeEmailSelect}
           onSureEmailSelect={onSureEmailSelect}
         />
-        <h3>这是一个标题</h3>
-        <Menu onSubmit={onSubmit} />
+        <h3>{title}</h3>
+        <Menu className="email-list__menu" onSubmit={onSubmit} />
         <EmailTable data={emailData} onContentEdit={onContentEdit} />
       </Row>
     )
