@@ -54,11 +54,13 @@ export default class EmailList extends React.Component<EmailListProps, any> {
    */
   saveData = async () => {
     this.transformSomeString(true)
+    console.log(this.state);
     const { selectRow } = this.state
     try {
+      const { resid } = this.props
       const { error } = await http().saveEmailTemplate({
         ...selectRow,
-        ASEND_RESID: 610800378133
+        ASEND_RESID: resid
       })
       if (error === 0) {
         message.success('保存成功')
