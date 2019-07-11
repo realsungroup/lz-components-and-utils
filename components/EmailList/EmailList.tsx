@@ -6,9 +6,9 @@ import Menu from './Menu'
 import http from '../util/api'
 
 interface EmailListProps {
-  resid: Number
+  resid: number
 }
-
+ 
 export default class EmailList extends React.Component<EmailListProps, any> {
   state = {
     title: '', // 邮件标题
@@ -72,6 +72,26 @@ export default class EmailList extends React.Component<EmailListProps, any> {
     }
   }
 
+  createReplaceColumn =(colname: string) =>{
+    let autoSendColumn ={
+      "ASENDCOL_ID": 0,
+      "ASENDCOL_HOSTID": 0,
+      "ASENDCOL_RESID": 1,
+      "ASENDCOL_RESPID": 0,
+      "ASENDCOL_TYPE": 5,
+      "ASENDCOL_COLNAME": "",
+      "ASENDCOL_COLCOND": null,
+      "ASENDCOL_COLVALUE": "",
+      "ASENDCOL_TIME_UNIT": 0,
+      "ASENDCOL_ORDER": 0,
+      "ASENDCOL_EDTID": null,
+      "ASENDCOL_EDTTIME": "0001-01-01T00:00:00"
+    }
+    autoSendColumn.ASENDCOL_COLNAME=colname;
+    const { resid } = this.props;
+    autoSendColumn.ASENDCOL_RESID= resid;  
+    return autoSendColumn;
+  }
   /**
    * 转换字段
    *
@@ -79,9 +99,14 @@ export default class EmailList extends React.Component<EmailListProps, any> {
    * @memberof EmailList
    */
   transformSomeString = (isToString: Boolean) => {
-    const { selectRow }: { selectRow: any } = this.state
-    let { ASEND_CONTENT } = selectRow
+    const { selectRow }: { selectRow: any } = this.state;
+    let { ASEND_CONTENT } = selectRow;
+    let replaceColumns=[];
     this.state.cmscolumninfo.forEach(({ ColDispName, ColName }) => {
+      if (ASEND_CONTENT.match(new RegExp(ColDispName, 'g'))){
+        
+        replaceColumns.push(this.createReplaceColumn(ColName));
+      };
       isToString
         ? (ASEND_CONTENT = ASEND_CONTENT.replace(
             new RegExp(ColDispName, 'g'),
@@ -90,12 +115,17 @@ export default class EmailList extends React.Component<EmailListProps, any> {
         : (ASEND_CONTENT = ASEND_CONTENT.replace(
             eval('/\\[' + ColName + '\\]/g'),
             ColDispName
-          ))
+          ));
+      
     })
-    selectRow.ASEND_CONTENT = ASEND_CONTENT
-    this.setState({ selectRow })
+    console.log(replaceColumns);
+    console.log(selectRow);
+    selectRow.ListOfAutoSendColData=replaceColumns;
+    selectRow.ASEND_CONTENT = ASEND_CONTENT;
+    selectRow.UpdateAutoSendColData=true;
+    this.setState({ selectRow });
   }
-
+  
   /**
    * 提交事件
    *
