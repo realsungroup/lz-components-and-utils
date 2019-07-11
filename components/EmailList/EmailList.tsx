@@ -8,7 +8,7 @@ import http from '../util/api'
 interface EmailListProps {
   resid: number
 }
- 
+
 export default class EmailList extends React.Component<EmailListProps, any> {
   state = {
     title: '', // 邮件标题
@@ -71,7 +71,11 @@ export default class EmailList extends React.Component<EmailListProps, any> {
       message.error(error.message || '系统异常')
     }
   }
-
+/**
+ * 创建替换字段对象
+ * @param colname 内部字段
+ * @memberof EmailList
+ */
   createReplaceColumn =(colname: string) =>{
     let autoSendColumn ={
       "ASENDCOL_ID": 0,
@@ -90,6 +94,7 @@ export default class EmailList extends React.Component<EmailListProps, any> {
     autoSendColumn.ASENDCOL_COLNAME=colname;
     const { resid } = this.props;
     autoSendColumn.ASENDCOL_RESID= resid;  
+     
     return autoSendColumn;
   }
   /**
