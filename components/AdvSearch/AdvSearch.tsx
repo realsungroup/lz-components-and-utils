@@ -42,18 +42,18 @@ const logicSymbolMap = {
 class AdvSearch extends React.Component<any, any> {
   static propTypes = propTypes;
   static defaultProps = defaultProps;
+  constructor(props) {
+    super(props);
+    const {initialSearchList}=props;
+    let validInitialSearchList=(initialSearchList===undefined||initialSearchList.length===0)?defaultProps.initialSearchList:initialSearchList;
 
-  state = {
-    searchList: [
-      {
-        logicSymbol: '',
-        compareSymbol: '',
-        field: '',
-        control: 'Input',
-        value: ''
-      }
-    ] // 搜索列表
+    this.state = {
+      searchList:validInitialSearchList
+    };
+   
+     
   };
+ 
 
   componentDidMount = () => {};
 
@@ -147,7 +147,7 @@ class AdvSearch extends React.Component<any, any> {
       return `${where} ${curWhere}`;
     }, '');
     console.log({ where });
-    this.props.onConfirm && this.props.onConfirm(where);
+    this.props.onConfirm && this.props.onConfirm(where,searchList);
   };
 
   handleRemoveSearchItem = index => {
@@ -190,7 +190,9 @@ class AdvSearch extends React.Component<any, any> {
 
   render() {
     const { fields } = this.props;
-    const { searchList } = this.state;
+    let { searchList } = this.state;
+   
+    
     return (
       <div className="adv-search">
         {searchList.map((searchItem, index) => (

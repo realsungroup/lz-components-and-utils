@@ -6,9 +6,10 @@ interface CustomWindow extends Window {
   biConfig: any;
 }
 declare let window: CustomWindow;
-
-http.setDefaultBaseURL('http://kingofdinner.realsun.me:5051/');
-
+//bi 演示
+http.setDefaultBaseURL('http://kingofdinner.realsun.me:8102/');
+//powerworks 演示
+//http.setDefaultBaseURL('http://kingofdinner.realsun.me:5051/');
 // 请求拦截
 http.setRequestInterceptors(
   function(config) {

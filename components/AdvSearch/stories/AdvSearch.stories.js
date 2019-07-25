@@ -21,9 +21,18 @@ const testFields = [
     control: 'Input'
   }
 ];
+const searchList= [
+      {
+        logicSymbol: 'and',
+        compareSymbol: '=',
+        field: 'yearmonth',
+        control: 'Input',
+        value: '201908'
+      }
+    ] // 搜索列表
 
 storiesOf('AdvSearch 高级搜索', module).add('AdvSearch', () => (
   <div style={{ width: 500 }}>
-    <AdvSearch fields={testFields} />
+    <AdvSearch fields={testFields}  initialSearchList={searchList}/>
   </div>
 ));
