@@ -4,6 +4,7 @@ import { Icon, Tooltip, Modal } from 'antd';
 import DashboardChart from './DashboardChart';
 import Resizable from 're-resizable';
 import classNames from 'classnames';
+import AdvSearch from '../../../AdvSearch'
 
 /**
  * 仪表盘页面的列
@@ -13,7 +14,28 @@ export default class DashboardPageCol extends React.Component<any, any> {
     type: PropTypes.oneOf(['add', 'row']),
     onAddRow: PropTypes.func
   };
+  handleDoSearch = (where, searchList) => {
+    let {
+      mode,
 
+      colIndex,
+      rowIndex,
+      rows
+    } = this.props;
+    //colItem.settingForm.where=where;
+    let newRows = {};
+    if (where == undefined) {
+      where = "";
+    }
+    if (searchList == undefined) {
+      searchList = [];
+    }
+    newRows = JSON.parse(JSON.stringify(rows));
+
+    newRows[rowIndex].cols[colIndex].settingForm.where = where;
+    newRows[rowIndex].cols[colIndex].settingForm.searchList = searchList;
+    this.props.onSearch && this.props.onSearch(mode, newRows);
+  }
   handleColClick = e => {
     e.stopPropagation();
     const { selectedCol, colItem, rowItem, onActiveCol } = this.props;
@@ -45,9 +67,17 @@ export default class DashboardPageCol extends React.Component<any, any> {
       colItem,
       selectedCol,
       resizeGrid,
-      onDeleteCol
+      onDeleteCol,
+      settingForm,
+      showSearchBar
     } = this.props;
+    const { fields, searchList } = colItem.settingForm;
+    const aDvFields = fields.map((item) => {
 
+      return { value: item.id, label: item.text, control: "Input" }
+    }
+
+    );
     // 编辑列
     if (mode === 'edit') {
       return (
@@ -90,11 +120,23 @@ export default class DashboardPageCol extends React.Component<any, any> {
 
     // 查看列
     return (
-      <DashboardChart
-        style={{ height: colItem.height }}
-        mode="view"
-        {...colItem.props}
-      />
+      <div>
+        {showSearchBar &&
+          <div style={{ width: 500 }}>
+            <AdvSearch 
+            fields={aDvFields} 
+            initialSearchList={searchList} 
+            readOnly={true} 
+            onConfirm={this.handleDoSearch} />
+            </div>}
+        <DashboardChart
+          style={{ height: colItem.height }}
+          mode="view"
+          {...colItem.props}
+        />
+
+      </div>
+
     );
   }
 }

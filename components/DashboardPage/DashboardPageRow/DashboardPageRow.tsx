@@ -10,6 +10,7 @@ interface DashboardPageRowProps {
   type: string; // 类型：'add' 表示添加行；'row' 表示正常行
   onAddRow: any; // 添加行的回调
   selectedRow: any; // 选择的行
+  showSearchBar:boolean;//是否显示查询栏
 }
 
 interface OptionalChartInterface {
@@ -131,7 +132,11 @@ export default class DashboardPageRow extends React.Component<
       this.setState({ resizing: true });
     }
   };
+  handleOnSearch=(mode,newrows)=>{
+   
+    this.props.onSearch && this.props.onSearch(mode,newrows);
 
+  }
   handleResizeStop = (rowItem, colItem, delta) => {
     this.setState({ resizing: false });
     this.props.onResizeStop && this.props.onResizeStop(rowItem, colItem, delta);
@@ -157,8 +162,14 @@ export default class DashboardPageRow extends React.Component<
       onActiveCol,
       onDeleteCol,
       dashboardPageWidth,
-      baseURL
+      baseURL,
+      rows,
+      rowIndex,
+      showSearchBar
+
     } = this.props;
+    console.log("(showSearchBar)")
+    console.log(showSearchBar);
     const { modalVisible, selectedChart, resizing } = this.state;
 
     const dragGrid: any = this.getDragGrid();
@@ -253,12 +264,18 @@ export default class DashboardPageRow extends React.Component<
     // 查看模式
     return (
       <Row gutter={rowItem.gutter}>
-        {rowItem.cols.map(colItem => (
+        {rowItem.cols.map((colItem,colIndex) => (
           <Col key={colItem.id} span={colItem.span}>
             <DashboardPageCol
               mode={mode}
               colItem={colItem}
+              colIndex={colIndex}
+              rowItem={rowItem}
+              rows={rows}
+              rowIndex={rowIndex}
               baseURL={this.props.baseURL}
+              onSearch={this.handleOnSearch}
+              showSearchBar={showSearchBar}
             />
           </Col>
         ))}

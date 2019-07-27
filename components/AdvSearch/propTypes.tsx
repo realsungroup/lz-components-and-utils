@@ -12,10 +12,12 @@ export const defaultProps = {
     }
   ] ,// 搜索列表
   confirmText: '确定',
-  enConfirmText: 'Confirm'
+  enConfirmText: 'Confirm',
+  readOnly:false
 };
 
 export const propTypes = {
+  readOnly:PropTypes.bool,
   /**
    * 可高级查询的字段
    * 默认：[]

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Icon } from 'antd';
+import { Icon, Tooltip } from 'antd';
 import PropTypes from 'prop-types';
 import DashboardPageRow from './DashboardPageRow';
 import debounce from 'lodash/debounce';
@@ -7,6 +7,7 @@ import classNames from 'classnames';
 
 interface DashboardPageInterface {
   mode: string; // 模式：'edit' 编辑 | 'view' 查看
+  showSearchBar:boolean;//是否显示查询栏
   dashboardId: number; // 仪表盘 id
   rows: any; // 行数据
   activeChartId: string; // 在编辑模式下，被激活的图表的 id
@@ -30,7 +31,8 @@ export default class DashboardPage extends React.Component<
     activeChartId: PropTypes.string,
     onResizeStop: PropTypes.func,
     onStop: PropTypes.func,
-    onDeleteChart: PropTypes.func
+    onDeleteChart:PropTypes.func,
+    showSearchBar:PropTypes.bool
   };
 
   state = {};
@@ -77,6 +79,13 @@ export default class DashboardPage extends React.Component<
   handleAddRow = () => {
     this.props.onAddRow && this.props.onAddRow();
   };
+  handleOnSearch=(mode,newrows)=>{
+     
+    
+   
+   this.props.onSearch && this.props.onSearch(mode,newrows);
+
+  }
 
   handleActiveRow = rowItem => {
     this.props.onActiveRow && this.props.onActiveRow(rowItem);
@@ -85,6 +94,13 @@ export default class DashboardPage extends React.Component<
   handleDeleteRow = rowItem => {
     this.props.onDeleteRow && this.props.onDeleteRow(rowItem);
   };
+  handleReload=()=>{
+     
+    
+   
+    this.props.onReload && this.props.onReload();
+ 
+   }
 
   renderContent = () => {
     const {
@@ -97,13 +113,22 @@ export default class DashboardPage extends React.Component<
       onResizeStop,
       onDeleteCol,
       rows,
-
       dashboardPageWidth,
-      baseURL
+      baseURL,
+      showSearchBar
     } = this.props;
+    console.log('page showSearchbar');
+    console.log(showSearchBar);
     return (
+      
       <Fragment>
-        {rows.map(rowItem => (
+         {mode === 'view' && showSearchBar && (
+          <div className="dashboard-page-reload"  onClick={this.handleReload}>
+            <Tooltip placement="right" title="ReloadChart"> <Icon type="reload"  /></Tooltip>
+           
+          </div>
+        )}
+        {rows.map((rowItem,rowIndex) => (
           <DashboardPageRow
             mode={mode}
             key={rowItem.id}
@@ -119,6 +144,10 @@ export default class DashboardPage extends React.Component<
             onDeleteCol={onDeleteCol}
             dashboardPageWidth={dashboardPageWidth}
             baseURL={baseURL}
+            onSearch={this.handleOnSearch}
+            rowIndex={rowIndex}
+            rows={rows}
+            showSearchBar={showSearchBar}
           />
         ))}
         {mode === 'edit' && (
@@ -126,6 +155,7 @@ export default class DashboardPage extends React.Component<
             <Icon type="plus" style={{ fontSize: 40 }} />
           </div>
         )}
+        
       </Fragment>
     );
   };

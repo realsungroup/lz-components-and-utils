@@ -15,10 +15,17 @@ export default class Login extends React.Component<any, any> {
   handleLogin = async () => {
     let res;
     try {
+      
       res = await http().login({
         code: 'demo1',
         password: '123456'
       });
+
+      // res = await http().login({
+      //   code: 'demo',
+      //   password: '1234@qwer'
+      // });
+
     } catch (err) {
       console.error(err);
       return message.error(err.message);

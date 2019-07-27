@@ -1,6 +1,7 @@
 import React from 'react';
 import { Select, Icon, Input, Button } from 'antd';
 import { defaultProps, propTypes } from './propTypes';
+import { read } from 'fs';
 
 const Option = Select.Option;
 
@@ -44,9 +45,9 @@ class AdvSearch extends React.Component<any, any> {
   static defaultProps = defaultProps;
   constructor(props) {
     super(props);
-    const {initialSearchList}=props;
-    let validInitialSearchList=(initialSearchList===undefined||initialSearchList.length===0)?defaultProps.initialSearchList:initialSearchList;
-
+    // const {initialSearchList}=props;
+    // let validInitialSearchList=(initialSearchList===undefined||initialSearchList.length===0)?defaultProps.initialSearchList:initialSearchList;
+    const validInitialSearchList=this.getInitialSearchList(this.props);
     this.state = {
       searchList:validInitialSearchList
     };
@@ -54,9 +55,18 @@ class AdvSearch extends React.Component<any, any> {
      
   };
  
-
+  getInitialSearchList=(prop)=>{
+    const {initialSearchList}=prop;
+    let validInitialSearchList=(initialSearchList===undefined||initialSearchList.length===0)?defaultProps.initialSearchList:initialSearchList;
+    return validInitialSearchList
+  }
   componentDidMount = () => {};
+  componentWillReceiveProps=(nextProps)=>{
+    console.log("nextProps");
+    console.log(nextProps);
+    this.setState({ searchList: this.getInitialSearchList(nextProps)});
 
+  }
   componentWillUnmount = () => {};
 
   handleAddSearchItem = () => {
@@ -120,7 +130,14 @@ class AdvSearch extends React.Component<any, any> {
     newSearchList.splice(searchItemIndex, 1, newSearchItem);
     this.setState({ searchList: newSearchList });
   };
+  handleDoSearch=()=> {
+     this.handleConfirm();
 
+  };
+  handleDoRestoreSearchList=()=>{
+    this.setState({searchList:this.getInitialSearchList(this.props)});
+
+  }
   handleConfirm = () => {
     const { searchList } = this.state;
     const searchArr = searchList.filter(
@@ -189,7 +206,7 @@ class AdvSearch extends React.Component<any, any> {
   };
 
   render() {
-    const { fields } = this.props;
+    const { fields,readOnly} = this.props;
     let { searchList } = this.state;
    
     
@@ -230,25 +247,40 @@ class AdvSearch extends React.Component<any, any> {
               ))}
             </Select>
             {this.renderValueControl(searchItem)}
-            <Icon
+            {(!readOnly)&&<Icon
               type="close"
               className="adv-search__remove-search-item"
               onClick={() => this.handleRemoveSearchItem(index)}
-            />
+            />}
+             
           </div>
         ))}
-
-        <div className="adv-search__add-btn" onClick={this.handleAddSearchItem}>
+          <div className="adv-search__search-item_viewmode">
+            {(readOnly)&&<Icon
+              type="search"
+              className="adv-search__do-search-item"
+              onClick={this.handleDoSearch}
+            />}
+            {(readOnly)&&<Icon
+              type="undo"
+              className="adv-search__undo-searchlist-item"
+              onClick={this.handleDoRestoreSearchList}
+            />}
+          </div>
+          
+        {(!readOnly) && <div className="adv-search__add-btn" onClick={this.handleAddSearchItem}>
           <Icon type="plus" />
-        </div>
-        <div className="adv-search__confirm-btn">
+        </div>}
+        {(!readOnly) && <div className="adv-search__confirm-btn">
           <Button type="primary" block onClick={this.handleConfirm}>
             {this.props.confirmText}
           </Button>
-        </div>
+        </div>}
+        
       </div>
     );
   }
+  
 }
 
 export default AdvSearch;

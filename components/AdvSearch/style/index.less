@@ -1,12 +1,21 @@
 .adv-search {
   width: 100%;
   padding: 16px;
+  margin-left: 70px;
   &__select-field {
   }
   &__search-item {
     display: flex;
     align-items: center;
     height: 34px;
+  }
+  &__search-item_viewmode {
+    
+    display: flex;
+    align-items: center;
+    height: 34px;
+    margin-top: -34px;
+    margin-left: -10px;
   }
   &__search-item-logic,
   &__select-field,
@@ -41,6 +50,14 @@
   }
   &__remove-search-item {
     margin-left: 4px;
+    cursor: pointer;
+  }
+  &__do-search-item {
+    margin-left: 4px;
+    cursor: pointer;
+  }
+  &__undo-searchlist-item {
+    margin-left: 8px;
     cursor: pointer;
   }
 }

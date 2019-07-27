@@ -6,6 +6,8 @@ import http from '../../util/api';
 import { calcChartOptionByParams } from '../../util';
 
 import { rows } from './mockData';
+import {finisarRows} from './mockFinisarData';
+import { object } from 'prop-types';
 
 /**
  * 显示 dashboardPage 时，进行请求、计算 rows
@@ -116,13 +118,30 @@ export default class DashboardPageWrap extends React.Component {
 
   getData = async () => {
     await calcRows(rows);
-    this.setState({ rows });
+    this.setState({ rows:rows });
+    // await calcRows(finisarRows);
+    // this.setState({ rows:finisarRows });
   };
+  handleOnReload=()=>{
 
+  }
+  handleOnSearch=async (mode,newrows)=>{
+    
+    await calcRows(newrows);
+    this.setState({ rows:newrows });
+    console.log("dashboardpage newrows")
+    console.log(newrows)
+    console.log("dashboardpage mode")
+    console.log(mode)
+    console.log("dashboardpage row")
+
+ console.log(rows)
+
+  }
   render() {
     return (
       <div>
-        <DashboardPage rows={this.state.rows} mode="view" />
+        <DashboardPage rows={this.state.rows} mode="view" showSearchBar={true} onReload={this.getData}  onSearch={this.handleOnSearch}/>
       </div>
     );
   }
