@@ -17,7 +17,10 @@ npm run compile
 ## 三、发布
 
 ```shell
-npm run pub
+ 
+npm login --registry http://registry.npmjs.org
+
+npm publish --registry http://registry.npmjs.org
 
 ```
 ##四、待优化
