@@ -7,11 +7,11 @@ interface CustomWindow extends Window {
 }
 declare let window: CustomWindow;
 //bi 演示
-http.setDefaultBaseURL('http://kingofdinner.realsun.me:8102/');
+// http.setDefaultBaseURL('http://kingofdinner.realsun.me:8102/');
 //powerworks 演示
 //http.setDefaultBaseURL('http://kingofdinner.realsun.me:5051/');
 //finisar 项目内网
-//http.setDefaultBaseURL('http://10.108.2.66:1001/');
+http.setDefaultBaseURL('http://10.108.2.66:1001/');
 // 请求拦截
 http.setRequestInterceptors(
   function(config) {

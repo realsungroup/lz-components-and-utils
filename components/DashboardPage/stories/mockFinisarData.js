@@ -25,7 +25,7 @@ export const finisarRows = [{
             "legendVisible": true,
             "tooltipVisible": true,
             "toolboxVisible": true,
-            "resid": 617192514213,
+            "resid": 617805070334,
             "records": [{
                 "leaderygno": 22681,
                 "leader": 12345,
@@ -1635,7 +1635,21 @@ export const finisarRows = [{
                   field: 'yearmonth',
                   control: 'Input',
                   value: '201908'
-                }
+                },
+                {
+                    logicSymbol: 'and',
+                    compareSymbol: '=',
+                    field: 'yearmonth',
+                    control: 'Input',
+                    value: '201908'
+                  },
+                  {
+                    logicSymbol: 'and',
+                    compareSymbol: '=',
+                    field: 'yearmonth',
+                    control: 'Input',
+                    value: '201908'
+                  }
               ] // 搜索列表
         },
         "props": {

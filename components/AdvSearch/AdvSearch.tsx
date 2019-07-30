@@ -193,6 +193,7 @@ class AdvSearch extends React.Component<any, any> {
         return (
           <Input
             className="adv-search__value-control"
+
             size="small"
             value={value}
             placeholder="值"
@@ -222,6 +223,7 @@ class AdvSearch extends React.Component<any, any> {
             </span>
             <Select
               className="adv-search__select-field"
+              disabled={readOnly}
               size="small"
               placeholder="字段"
               value={searchItem.field}
@@ -234,6 +236,7 @@ class AdvSearch extends React.Component<any, any> {
               ))}
             </Select>
             <Select
+              disabled={readOnly}
               className="adv-search__compare-symbol"
               size="small"
               placeholder="比较符"

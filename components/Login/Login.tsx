@@ -16,15 +16,15 @@ export default class Login extends React.Component<any, any> {
     let res;
     try {
       
-      res = await http().login({
-        code: 'demo1',
-        password: '123456'
-      });
-
       // res = await http().login({
-      //   code: 'demo',
-      //   password: '1234@qwer'
+      //   code: 'demo1',
+      //   password: '123456'
       // });
+
+      res = await http().login({
+        code: 'demo',
+        password: '1234@qwer'
+      });
 
     } catch (err) {
       console.error(err);

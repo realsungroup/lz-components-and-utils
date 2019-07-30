@@ -117,10 +117,10 @@ export default class DashboardPageWrap extends React.Component {
   };
 
   getData = async () => {
-    await calcRows(rows);
-    this.setState({ rows:rows });
-    // await calcRows(finisarRows);
-    // this.setState({ rows:finisarRows });
+    // await calcRows(rows);
+    // this.setState({ rows:rows });
+    await calcRows(finisarRows);
+    this.setState({ rows:finisarRows });
   };
   handleOnReload=()=>{
 
