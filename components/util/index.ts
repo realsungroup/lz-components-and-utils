@@ -170,7 +170,7 @@ export const calcChartOptionByParams = (
   calcChartDataBinding: boolean = true
 ): echarts.EChartOption => {
   // 默认 y 轴单位 offset
-  const DEFAULT_UNIT_OFFSET = 50;
+  const DEFAULT_UNIT_OFFSET = 80;
   const {
     type,
     titleVisible,
@@ -259,6 +259,7 @@ export const calcChartOptionByParams = (
               data: {},
               yAxisIndex: index
             };
+             
             const yAxisObj = {
               name: field.text,
               type: 'value',
@@ -275,6 +276,11 @@ export const calcChartOptionByParams = (
               seriesObj.data = field.records.map((record: any) => record[id]);
             }
             series.push(seriesObj);
+            if (index>0){
+              yAxisObj.position="right";
+              yAxisObj.offset=yAxisObj.offset -DEFAULT_UNIT_OFFSET;
+            }
+           
             yAxis[index] = yAxisObj;
           });
         }

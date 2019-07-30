@@ -72,7 +72,9 @@ export default class DashboardPageCol extends React.Component<any, any> {
       showSearchBar
     } = this.props;
     const { fields, searchList } = colItem.settingForm;
+    const isShowSearchBar=(showSearchBar&&searchList&&Array.isArray(searchList)&&searchList.length >0);
     const aDvFields = fields.map((item) => {
+    
 
       return { value: item.id, label: item.text, control: "Input" }
     }
@@ -121,7 +123,7 @@ export default class DashboardPageCol extends React.Component<any, any> {
     // 查看列
     return (
       <div>
-        {showSearchBar &&
+        {isShowSearchBar &&
           <div style={{ width: 500 }}>
             <AdvSearch 
             fields={aDvFields} 
