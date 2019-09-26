@@ -1352,6 +1352,11 @@
   resolved "https://registry.npm.taobao.org/@nodelib/fs.stat/download/@nodelib/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha1-K1o6s/kYzKSKjHVMCBaOPwPrphs=
 
+"@notadd/neditor@^2.1.18":
+  version "2.1.20"
+  resolved "https://registry.npm.taobao.org/@notadd/neditor/download/@notadd/neditor-2.1.20.tgz#7736d6453ea37b89e11cf9f52d52f83ae2aedfd5"
+  integrity sha1-dzbWRT6je4nhHPn1LVL4OuKu39U=
+
 "@reach/router@^1.2.1":
   version "1.2.1"
   resolved "https://registry.npm.taobao.org/@reach/router/download/@reach/router-1.2.1.tgz#34ae3541a5ac44fa7796e5506a5d7274a162be4e"
@@ -8441,10 +8446,10 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
-lz-request@^0.9.1:
-  version "0.9.1"
-  resolved "https://registry.npm.taobao.org/lz-request/download/lz-request-0.9.1.tgz#a7574888e9aa76ef0ea06985ffab5d276a5e9b64"
-  integrity sha1-p1dIiOmqdu8OoGmF/6tdJ2pem2Q=
+lz-request@^0.9.3:
+  version "0.9.3"
+  resolved "https://registry.npm.taobao.org/lz-request/download/lz-request-0.9.3.tgz#d901451d635583a97f911ec1a1cfa4d9bb12c4c0"
+  integrity sha1-2QFFHWNVg6l/kR7Boc+k2bsSxMA=
   dependencies:
     "@storybook/theming" "^5.0.11"
     axios "^0.18.0"
@@ -13935,6 +13940,11 @@ walker@^1.0.7, walker@~1.0.5:
   integrity sha1-L3+bj9ENZ3JisYqITijRlhjgKPs=
   dependencies:
     makeerror "1.0.x"
+
+wangeditor@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.npm.taobao.org/wangeditor/download/wangeditor-3.1.1.tgz#fbd3c1d4976923c9edebb85b29d30b35512ad039"
+  integrity sha1-+9PB1JdpI8nt67hbKdMLNVEq0Dk=
 
 warning@4.x, warning@^4.0.1, warning@^4.0.2, warning@^4.0.3, warning@~4.0.3:
   version "4.0.3"
