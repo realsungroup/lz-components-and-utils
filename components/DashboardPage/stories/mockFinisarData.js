@@ -1635,21 +1635,7 @@ export const finisarRows = [{
                   field: 'yearmonth',
                   control: 'Input',
                   value: '201908'
-                },
-                {
-                    logicSymbol: 'and',
-                    compareSymbol: '=',
-                    field: 'yearmonth',
-                    control: 'Input',
-                    value: '201908'
-                  },
-                  {
-                    logicSymbol: 'and',
-                    compareSymbol: '=',
-                    field: 'yearmonth',
-                    control: 'Input',
-                    value: '201908'
-                  }
+                } 
               ] // 搜索列表
         },
         "props": {

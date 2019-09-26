@@ -2350,6 +2350,13 @@ address@^1.0.1:
   resolved "https://registry.npm.taobao.org/address/download/address-1.1.0.tgz#ef8e047847fcd2c5b6f50c16965f924fd99fe709"
   integrity sha1-744EeEf80sW29QwWll+ST9mf5wk=
 
+ag-grid-react@^21.2.0:
+  version "21.2.0"
+  resolved "https://registry.npm.taobao.org/ag-grid-react/download/ag-grid-react-21.2.0.tgz#760cc98a3513c21c9331bb8e131e1a60e6314602"
+  integrity sha1-dgzJijUTwhyTMbuOEx4aYOYxRgI=
+  dependencies:
+    prop-types "^15.6.2"
+
 "airbnb-js-shims@^1 || ^2":
   version "2.2.0"
   resolved "https://registry.npm.taobao.org/airbnb-js-shims/download/airbnb-js-shims-2.2.0.tgz#46e1d9d9516f704ef736de76a3b6d484df9a96d8"
