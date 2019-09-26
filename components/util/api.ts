@@ -9,9 +9,9 @@ declare let window: CustomWindow;
 //bi 演示
 // http.setDefaultBaseURL('http://kingofdinner.realsun.me:8102/');
 //powerworks 演示
-//http.setDefaultBaseURL('http://kingofdinner.realsun.me:5051/');
+http.setDefaultBaseURL('http://kingofdinner.realsun.me:1201/');
 //finisar 项目内网
-http.setDefaultBaseURL('http://10.108.2.66:1001/');
+//http.setDefaultBaseURL('http://10.108.2.66:1001/');
 // 请求拦截
 http.setRequestInterceptors(
   function(config) {
@@ -88,6 +88,15 @@ export const makeCancelable = promise => {
 http.createApi('getFieldAggregateValue', {
   method: 'get',
   url: '/api/100/table/GetDataBySqlParts'
+});
+/**
+ * 获取表格列定义数据
+ * 参数：{ resid }
+ * 1. resid：资源id
+ */
+http.createApi('getTableColumnDefine', {
+  method: 'get',
+  url: '/api/100/table/RetrieveColumnsDefineByArray'
 });
 
 export default http;

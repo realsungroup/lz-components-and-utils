@@ -22,8 +22,8 @@ export default class Login extends React.Component<any, any> {
       // });
 
       res = await http().login({
-        code: 'demo',
-        password: '1234@qwer'
+        code: 'demo1',
+        password: '123456'
       });
 
     } catch (err) {
