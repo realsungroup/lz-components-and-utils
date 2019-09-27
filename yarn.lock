@@ -2350,6 +2350,16 @@ address@^1.0.1:
   resolved "https://registry.npm.taobao.org/address/download/address-1.1.0.tgz#ef8e047847fcd2c5b6f50c16965f924fd99fe709"
   integrity sha1-744EeEf80sW29QwWll+ST9mf5wk=
 
+ag-grid-community@^21.2.0:
+  version "21.2.1"
+  resolved "https://registry.npm.taobao.org/ag-grid-community/download/ag-grid-community-21.2.1.tgz#0d8ab868f2fe8da302e19d14ef99669ef00d3b28"
+  integrity sha1-DYq4aPL+jaMC4Z0U75lmnvANOyg=
+
+ag-grid-enterprise@^21.2.0:
+  version "21.2.1"
+  resolved "https://registry.npm.taobao.org/ag-grid-enterprise/download/ag-grid-enterprise-21.2.1.tgz#2005f07f6ace847ce8e31b16f6cda5b327b97c94"
+  integrity sha1-IAXwf2rOhHzo4xsW9s2lsye5fJQ=
+
 ag-grid-react@^21.2.0:
   version "21.2.0"
   resolved "https://registry.npm.taobao.org/ag-grid-react/download/ag-grid-react-21.2.0.tgz#760cc98a3513c21c9331bb8e131e1a60e6314602"

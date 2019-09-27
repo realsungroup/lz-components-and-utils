@@ -47,27 +47,27 @@ class AdvSearch extends React.Component<any, any> {
     super(props);
     // const {initialSearchList}=props;
     // let validInitialSearchList=(initialSearchList===undefined||initialSearchList.length===0)?defaultProps.initialSearchList:initialSearchList;
-    const validInitialSearchList=this.getInitialSearchList(this.props);
+    const validInitialSearchList = this.getInitialSearchList(this.props);
     this.state = {
-      searchList:validInitialSearchList
+      searchList: validInitialSearchList
     };
-   
-     
+
+
   };
- 
-  getInitialSearchList=(prop)=>{
-    const {initialSearchList}=prop;
-    let validInitialSearchList=(initialSearchList===undefined||initialSearchList.length===0)?defaultProps.initialSearchList:initialSearchList;
+
+  getInitialSearchList = (prop) => {
+    const { initialSearchList } = prop;
+    let validInitialSearchList = (initialSearchList === undefined || initialSearchList.length === 0) ? defaultProps.initialSearchList : initialSearchList;
     return validInitialSearchList
   }
-  componentDidMount = () => {};
-  componentWillReceiveProps=(nextProps)=>{
+  componentDidMount = () => { };
+  componentWillReceiveProps = (nextProps) => {
     console.log("nextProps");
     console.log(nextProps);
-    this.setState({ searchList: this.getInitialSearchList(nextProps)});
+    this.setState({ searchList: this.getInitialSearchList(nextProps) });
 
   }
-  componentWillUnmount = () => {};
+  componentWillUnmount = () => { };
 
   handleAddSearchItem = () => {
     this.setState({
@@ -130,12 +130,12 @@ class AdvSearch extends React.Component<any, any> {
     newSearchList.splice(searchItemIndex, 1, newSearchItem);
     this.setState({ searchList: newSearchList });
   };
-  handleDoSearch=()=> {
-     this.handleConfirm();
+  handleDoSearch = () => {
+    this.handleConfirm();
 
   };
-  handleDoRestoreSearchList=()=>{
-    this.setState({searchList:this.getInitialSearchList(this.props)});
+  handleDoRestoreSearchList = () => {
+    this.setState({ searchList: this.getInitialSearchList(this.props) });
 
   }
   handleConfirm = () => {
@@ -154,7 +154,7 @@ class AdvSearch extends React.Component<any, any> {
         : '';
       const where = `${logicSymbol}(${searchItem.field} ${
         searchItem.compareSymbol
-      } '${searchItem.value}')`;
+        } '${searchItem.value}')`;
       whereArr.push(where);
     });
     const where = whereArr.reduce((where, curWhere, index) => {
@@ -164,7 +164,7 @@ class AdvSearch extends React.Component<any, any> {
       return `${where} ${curWhere}`;
     }, '');
     console.log({ where });
-    this.props.onConfirm && this.props.onConfirm(where,searchList);
+    this.props.onConfirm && this.props.onConfirm(where, searchList);
   };
 
   handleRemoveSearchItem = index => {
@@ -207,10 +207,10 @@ class AdvSearch extends React.Component<any, any> {
   };
 
   render() {
-    const { fields,readOnly} = this.props;
+    const { fields, readOnly } = this.props;
     let { searchList } = this.state;
-   
-    
+
+
     return (
       <div className="adv-search">
         {searchList.map((searchItem, index) => (
@@ -250,27 +250,27 @@ class AdvSearch extends React.Component<any, any> {
               ))}
             </Select>
             {this.renderValueControl(searchItem)}
-            {(!readOnly)&&<Icon
+            {(!readOnly) && <Icon
               type="close"
               className="adv-search__remove-search-item"
               onClick={() => this.handleRemoveSearchItem(index)}
             />}
-             
+
           </div>
         ))}
-          <div className="adv-search__search-item_viewmode">
-            {(readOnly)&&<Icon
-              type="search"
-              className="adv-search__do-search-item"
-              onClick={this.handleDoSearch}
-            />}
-            {(readOnly)&&<Icon
-              type="undo"
-              className="adv-search__undo-searchlist-item"
-              onClick={this.handleDoRestoreSearchList}
-            />}
-          </div>
-          
+        <div className="adv-search__search-item_viewmode">
+          {(readOnly) && <Icon
+            type="search"
+            className="adv-search__do-search-item"
+            onClick={this.handleDoSearch}
+          />}
+          {(readOnly) && <Icon
+            type="undo"
+            className="adv-search__undo-searchlist-item"
+            onClick={this.handleDoRestoreSearchList}
+          />}
+        </div>
+
         {(!readOnly) && <div className="adv-search__add-btn" onClick={this.handleAddSearchItem}>
           <Icon type="plus" />
         </div>}
@@ -279,11 +279,11 @@ class AdvSearch extends React.Component<any, any> {
             {this.props.confirmText}
           </Button>
         </div>}
-        
+
       </div>
     );
   }
-  
+
 }
 
 export default AdvSearch;
