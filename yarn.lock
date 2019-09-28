@@ -2355,7 +2355,7 @@ ag-grid-community@^21.2.0:
   resolved "https://registry.npm.taobao.org/ag-grid-community/download/ag-grid-community-21.2.1.tgz#0d8ab868f2fe8da302e19d14ef99669ef00d3b28"
   integrity sha1-DYq4aPL+jaMC4Z0U75lmnvANOyg=
 
-ag-grid-enterprise@^21.2.0:
+ag-grid-enterprise@^21.2.1:
   version "21.2.1"
   resolved "https://registry.npm.taobao.org/ag-grid-enterprise/download/ag-grid-enterprise-21.2.1.tgz#2005f07f6ace847ce8e31b16f6cda5b327b97c94"
   integrity sha1-IAXwf2rOhHzo4xsW9s2lsye5fJQ=

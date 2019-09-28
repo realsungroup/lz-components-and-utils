@@ -58,7 +58,7 @@
     "@babel/polyfill": "^7.4.3",
     "@notadd/neditor": "^2.1.18",
     "ag-grid-community": "^21.2.0",
-    "ag-grid-enterprise": "^21.2.0",
+    "ag-grid-enterprise": "^21.2.1",
     "ag-grid-react": "^21.2.0",
     "antd": "^3.16.5",
     "classnames": "^2.2.6",
