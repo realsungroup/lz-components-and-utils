@@ -7,9 +7,6 @@ import "ag-grid-enterprise/chartsModule";
 import "./style";
 import PropTypes from "prop-types";
 import http, { makeCancelable } from "../../util/api";
-import { Spin, Tabs } from "antd";
-
-const { TabPane } = Tabs;
 
 //中位值函数
 const midFunc = (values: Array<number>) => {
@@ -45,7 +42,7 @@ interface LZAGGrid {
 interface agColumnDef {
   headerName: String;
   field: String;
-  width: number;
+  // width: number;
   filter: String;
   pivot: boolean;
   sortable: boolean;
@@ -58,6 +55,7 @@ interface agColumnDef {
   enableRowGroup: boolean;
   enableValue: boolean;
   aggFunc: string;
+  filterParams: object;
 }
 
 class LZAGGrid extends React.Component<any, any> {
@@ -74,15 +72,16 @@ class LZAGGrid extends React.Component<any, any> {
       },
       columnDefs: [],
       rowData: [],
-      sideBar: true
+      sideBar: true,
+      tabName: ""
     };
   }
 
   getColumns = async props => {
     const httpParams = {};
-    const { resids, dblinkname } = props || this.props;
+    const { resid, dblinkname } = props || this.props;
     let p3 = makeCancelable(
-      http(httpParams).getTableColumnDefine({ resid: resids[0], dblinkname })
+      http(httpParams).getTableColumnDefine({ resid, dblinkname })
     );
     let res: any;
     try {
@@ -95,12 +94,13 @@ class LZAGGrid extends React.Component<any, any> {
       let column: agColumnDef = {
         field: item.ColName,
         headerName: item.ColDispName,
-        width: item.CS_SHOW_WIDTH,
+        // width: item.CS_SHOW_WIDTH,
         resizable: true,
         pivot: false,
         sortable: true,
         checkboxSelection: false,
         filter: item.filter,
+        filterParams: {},
         headerCheckboxSelection: false,
         chartDataType: item.chartType,
         enablePivot: item.enablePivot,
@@ -109,15 +109,56 @@ class LZAGGrid extends React.Component<any, any> {
         enableValue: item.enableValue,
         aggFunc: item.aggFunc
       };
+      //后台未配置filter
+      if (!column.filter) {
+        switch (item.ColType) {
+          case 4:
+          case 8:
+            column.filter = "agDateColumnFilter";
+            break;
+          case 1:
+          case 5:
+            column.filter = "agTextColumnFilter";
+            break;
+          default:
+            column.filter = "agNumberColumnFilter";
+            break;
+        }
+      }
+      // filter为日期filter，则使用自定义的comparator
+      if (column.filter === "agDateColumnFilter") {
+        column.filterParams = {
+          // provide comparator function
+          comparator: function(filterLocalDateAtMidnight, cellValue) {
+            var dateAsString = cellValue;
+            if (dateAsString == null) return 0;
+
+            // In the example application, dates are stored as dd/mm/yyyy
+            // We create a Date object for comparison against the filter date
+            var dateParts = dateAsString.split("-");
+            var day = Number(dateParts[2]);
+            var month = Number(dateParts[1]) - 1;
+            var year = Number(dateParts[0]);
+            var cellDate = new Date(year, month, day);
+            // Now that both parameters are Date objects, we can compare
+            if (cellDate < filterLocalDateAtMidnight) {
+              return -1;
+            } else if (cellDate > filterLocalDateAtMidnight) {
+              return 1;
+            } else {
+              return 0;
+            }
+          }
+        };
+      }
       if (index === 0) {
         column.checkboxSelection = true;
         column.headerCheckboxSelection = true;
       }
-      this.setState({
-        tabNames: [...this.state.tabNames, res.ResourceData.ResName]
-      });
       return column;
     });
+    this.props.onSetTabName &&
+      this.props.onSetTabName(res.ResourceData.ResName, this.props.index);
     return columns;
   };
 
@@ -139,29 +180,41 @@ class LZAGGrid extends React.Component<any, any> {
   };
 
   onGridReady = async params => {
+    console.log("onGridReady");
     this.gridApi = params.api;
+    this.props.index === 0 &&
+      this.props.onSetLoading &&
+      this.props.onSetLoading(true);
     this.setState({ loading: true });
     const columnDefs = await this.getColumns(this.props);
     const rowData = await this.getRowData();
     params.api.addAggFunc("mid", midFunc);
     params.api.addAggFunc("countDistinct", countDistinctFunc);
-    this.setState({ columnDefs, rowData, loading: false });
+    this.setState({ columnDefs, rowData });
+    this.props.index === 0 &&
+      this.props.onSetLoading &&
+      this.props.onSetLoading(false);
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    console.log("componentDidMount");
+  }
 
   render() {
-    const { loading, rowData, columnDefs, defaultColDef, sideBar } = this.state;
-    console.log(columnDefs);
+    const {
+      loading,
+      rowData,
+      columnDefs,
+      defaultColDef,
+      sideBar,
+      tabName
+    } = this.state;
+    const { localeText } = this.props;
     return (
-      <TabPane
-        style={{ height: "100vh", width: "100%" }}
-        tab={this.props.resids[0]}
-        key="1"
-      >
+      <div className="lz-ag-grid">
         <AgGridReact
           defaultColDef={defaultColDef}
-          // rowSelection="multiple"
+          rowSelection="multiple"
           columnDefs={columnDefs}
           rowData={rowData}
           onGridReady={this.onGridReady}
@@ -172,8 +225,9 @@ class LZAGGrid extends React.Component<any, any> {
           sideBar={sideBar}
           enableRangeSelection={true}
           enableCharts={true}
+          localeText={localeText}
         ></AgGridReact>
-      </TabPane>
+      </div>
     );
   }
 }
