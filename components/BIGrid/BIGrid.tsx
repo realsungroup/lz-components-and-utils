@@ -5,7 +5,6 @@ import "ag-grid-enterprise";
 import "ag-grid-enterprise/chartsModule";
 import "./style";
 import PropTypes from "prop-types";
-import http, { makeCancelable } from "../util/api";
 import { Spin, Tabs } from "antd";
 import LZAGGrid from "./LZAGGrid";
 import zhCN from "./locales/zh-CN";

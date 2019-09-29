@@ -164,12 +164,18 @@ class LZAGGrid extends React.Component<any, any> {
 
   _p1: any;
   getRowData = async () => {
-    const { cmswhere, keyValue } = this.props;
+    const { cmswhere, keyValue, baseURL, cparm1, cparm2 } = this.props;
+    const httpParams: any = {};
+    if (baseURL) {
+      httpParams.baseURL = baseURL;
+    }
     this._p1 = makeCancelable(
-      http().getTable({
+      http(httpParams).getTable({
         resid: this.props.resid,
         cmswhere,
-        key: keyValue
+        key: keyValue,
+        cparm1,
+        cparm2
       })
     );
     let res: any;
@@ -183,7 +189,6 @@ class LZAGGrid extends React.Component<any, any> {
   };
 
   onGridReady = async params => {
-    console.log("onGridReady");
     this.gridApi = params.api;
     this.props.index === 0 &&
       this.props.onSetLoading &&
@@ -199,19 +204,10 @@ class LZAGGrid extends React.Component<any, any> {
       this.props.onSetLoading(false);
   };
 
-  componentDidMount() {
-    console.log("componentDidMount");
-  }
+  componentDidMount() {}
 
   render() {
-    const {
-      loading,
-      rowData,
-      columnDefs,
-      defaultColDef,
-      sideBar,
-      tabName
-    } = this.state;
+    const { rowData, columnDefs, defaultColDef, sideBar } = this.state;
     const { localeText } = this.props;
     return (
       <div className="lz-ag-grid">
