@@ -164,9 +164,12 @@ class LZAGGrid extends React.Component<any, any> {
 
   _p1: any;
   getRowData = async () => {
+    const { cmswhere, keyValue } = this.props;
     this._p1 = makeCancelable(
       http().getTable({
-        resid: this.props.resid
+        resid: this.props.resid,
+        cmswhere,
+        key: keyValue
       })
     );
     let res: any;

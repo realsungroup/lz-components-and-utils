@@ -1,5 +1,4 @@
 import React from "react";
-import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
 import "ag-grid-enterprise";
@@ -65,7 +64,7 @@ class BIGrid extends React.Component<any, any> {
 
   render() {
     const { loading, tabNames } = this.state;
-    const { gridProps, language } = this.props;
+    const { gridProps, language, height = "100vh" } = this.props;
     let localeText = null;
     if (language === "zhCN") {
       localeText = zhCN;
@@ -81,13 +80,12 @@ class BIGrid extends React.Component<any, any> {
                   key={props.resid.toString()}
                   forceRender
                 >
-                  <div style={{ height: "100vh", width: "100%" }}>
+                  <div style={{ height, width: "100%" }}>
                     <LZAGGrid
                       {...props}
                       onSetTabName={this.handleSetTabName}
                       onSetLoading={this.handleSetLoading}
                       index={index}
-                      key={index}
                       localeText={localeText}
                     />
                   </div>
