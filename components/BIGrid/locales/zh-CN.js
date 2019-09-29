@@ -1,0 +1,206 @@
+const localeText = {
+  // for filter panel
+  page: "Page",
+  more: "更多",
+  to: "To",
+  of: "Of",
+  next: "Nexten",
+  st: "sten",
+  first: "Firsten",
+  previous: "Previousen",
+  loadingOoo: "加载中...",
+
+  // for set filter
+  selectAll: "Select Allen",
+  searchOoo: "Search...",
+  bnks: "Bnc",
+
+  // for number filter and text filter
+  filterOoo: "Filter...",
+  applyFilter: "ApplyFilter...",
+  equals: "Equals",
+  notEquals: "NotEqual",
+
+  // for number filter
+  lessThan: "LessThan",
+  greaterThan: "GreaterThan",
+  lessThanOrEqual: "LessThanOrEqual",
+  greaterThanOrEqual: "GreaterThanOrEqual",
+  inRange: "InRange",
+
+  // for text filter
+  contains: "包含",
+  notContains: "不包含",
+  startsWith: "以...开始",
+  endsWith: "以...结束",
+
+  // filter conditions
+  andCondition: "and",
+  orCondition: "or",
+
+  // the header of the default group column
+  group: "分组",
+
+  // tool panel
+  columns: "列",
+  filters: "过滤器",
+  rowGroupColumns: "Pivot Cols",
+  rowGroupColumnsEmptyMessage: "拖拽至此进行分组",
+  valueColumns: "value Cols",
+  pivotMode: "透视模式",
+  groups: "分组",
+  values: "统计",
+  pivots: "Pivots",
+  valueColumnsEmptyMessage: " 拖拽至此进行统计",
+  pivotColumnsEmptyMessage: " drag here to pivot",
+  toolPanelButton: " 工具面板",
+
+  // other
+  noRowsToShow: " no rows",
+
+  // enterprise menu
+  pinColumn: "Pin Column",
+  valueAggregation: "Value Agg",
+  autosizeThiscolumn: "Autosize Diz",
+  autosizeAllColumns: "Autsoie em All",
+  groupBy: "Group by",
+  ungroupBy: "UnGroup by",
+  resetColumns: "Reset Those Cols",
+  expanll: "Open-em-up",
+  colpseAll: "Close-em-up",
+  toolPanel: "Tool Panelo",
+  export: "Exporto",
+  csvExport: "CSV Exportp",
+  excelExport: "Excel Exporto (.xlsx)",
+  excelXmlExport: "Excel Exporto (.xml)",
+
+  // enterprise menu (charts)
+  pivotChartAndPivotMode: "Pivot Chart & Pivot Mode",
+  pivotChart: "Pivot Chart",
+  chartRange: "Chart Range",
+
+  columnChart: "Column",
+  groupedColumn: "Grouped",
+  stackedColumn: "Stacked",
+  normalizedColumn: "100% Stacked",
+
+  barChart: "Bar",
+  groupedBar: "Grouped",
+  stackedBar: "Stacked",
+  normalizedBar: "100% Stacked",
+
+  pieChart: "Pie",
+  pie: "Pie",
+  doughnut: "Doughnut",
+
+  line: "Line",
+
+  xyChart: "X Y (Scatter)",
+  scatter: "Scatter",
+  bubble: "Bubble",
+
+  areaChart: "Area",
+  area: "Area",
+  stackerea: "Stacked",
+  normalizerea: "100% Stacked",
+
+  // enterprise menu pinning
+  pinLeft: "Pin <<",
+  pinRight: "Pin >>",
+  noPin: "DontPin <>",
+
+  // enterprise menu aggregation and status bar
+  sum: "求和",
+  min: "最小值",
+  max: "最大值",
+  mid: "中位值",
+  none: "none",
+  count: "计数",
+  average: "平均值",
+  filteredRows: "filtered",
+  selectedRows: "selected",
+  totalRows: "total tows",
+  totandFilteredRows: "rows",
+
+  // stanrd menu
+  copy: "Copy",
+  copyWithHeaders: "Copy Wit hHeaders",
+  ctrlC: "ctrl n C",
+  paste: "Paste",
+  ctrlV: "ctrl n V",
+
+  // charts
+  pivotChartTitle: "Pivot Chart",
+  rangeChartTitle: "Range Chart",
+  settings: "Settings",
+  ta: "ta",
+  format: "Format",
+  categories: "Categories",
+  series: "Series",
+  axis: "Axis",
+  color: "Color",
+  thickness: "Thickness",
+  xRotation: "X Rotation",
+  yRotation: "Y Rotation",
+  ticks: "Ticks",
+  width: "Width",
+  length: "Length",
+  padding: "Padding",
+  chart: "Chart",
+  title: "Title",
+  font: "Font",
+  top: "Top",
+  right: "Right",
+  bottom: "Bottom",
+  left: "Left",
+  bels: "bels",
+  size: "Size",
+  legend: "Legend",
+  position: "Position",
+  markerSize: "Marker Size",
+  markerStroke: "Marker Stroke",
+  markerPadding: "Marker Padding",
+  itemPaddingX: "Item Padding X",
+  itemPaddingY: "Item Padding Y",
+  strokeWidth: "Stroke Width",
+  offset: "Offset",
+  tooltips: "Tooltips",
+  offsets: "Offsets",
+  callout: "Callout",
+  markers: "Markers",
+  shadow: "Shadow",
+  blur: "Blur",
+  xOffset: "X Offset",
+  yOffset: "Y Offset",
+  lineWidth: "Line Width",
+  normal: "Normal",
+  bold: "Bold",
+  italic: "Italic",
+  boldItalic: "Bold Italic",
+  fillOpacity: "Fill Opacity",
+  strokeOpacity: "Line Opacity",
+  columnGroup: "Column",
+  barGroup: "Bar",
+  pieGroup: "Pie",
+  lineGroup: "Line",
+  scatterGroup: "Scatter",
+  areaGroup: "Area",
+  groupedColumnTooltip: "Grouped",
+  stackedColumnTooltip: "Stacked",
+  normalizedColumnTooltip: "100% Stacked",
+  groupedBarTooltip: "Grouped",
+  stackedBarTooltip: "Stacked",
+  normalizedBarTooltip: "100% Stacked",
+  pieTooltip: "Pie",
+  doughnutTooltip: "Doughnut",
+  lineTooltip: "Line",
+  groupereaTooltip: "Grouped",
+  stackereaTooltip: "Stacked",
+  normalizereaTooltip: "100% Stacked",
+  scatterTooltip: "Scatter",
+  bubbleTooltip: "Bubble",
+  notaToChart: "No ta avaible to be charted.",
+  pivotChartRequiresPivotMode: "Pivot Chart requires Pivot Mode enabled."
+};
+
+export default localeText;
