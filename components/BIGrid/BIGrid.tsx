@@ -69,13 +69,18 @@ class BIGrid extends React.Component<any, any> {
       localeText = zhCN;
     }
     return (
-      <Spin spinning={loading}>
-        <div className="ag-theme-balham bi-grids">
-          <Tabs defaultActiveKey={gridProps[0].resid.toString()} type="card">
+      <div className="ag-theme-balham bi-grids">
+        <Spin spinning={loading}>
+          <Tabs
+            style={{ height }}
+            defaultActiveKey={gridProps[0].resid.toString()}
+            type="card"
+          >
             {gridProps.map((props, index) => {
               return (
                 <TabPane
                   tab={tabNames[index]}
+                  style={{ height }}
                   key={props.resid.toString()}
                   forceRender
                 >
@@ -92,8 +97,8 @@ class BIGrid extends React.Component<any, any> {
               );
             })}
           </Tabs>
-        </div>
-      </Spin>
+        </Spin>
+      </div>
     );
   }
 }

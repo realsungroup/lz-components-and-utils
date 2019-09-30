@@ -77,9 +77,26 @@ class LZAGGrid extends React.Component<any, any> {
     };
   }
 
+  async componentDidUpdate(prevProps) {
+    const { cparm1, cparm2, cmswhere } = this.props;
+    if (
+      prevProps.cparm1 !== cparm1 ||
+      prevProps.cparm2 !== cparm2 ||
+      prevProps.cmswhere !== cmswhere
+    ) {
+      this.props.onSetLoading && this.props.onSetLoading(true);
+      // await this.getColumns(this.props);
+      await this.getRowData();
+      this.props.onSetLoading && this.props.onSetLoading(false);
+    }
+  }
+
   getColumns = async props => {
-    const httpParams = {};
-    const { resid, dblinkname } = props || this.props;
+    const httpParams: any = {};
+    const { resid, dblinkname, baseURL } = props || this.props;
+    if (baseURL) {
+      httpParams.baseURL = baseURL;
+    }
     let p3 = makeCancelable(
       http(httpParams).getTableColumnDefine({ resid, dblinkname })
     );
@@ -181,6 +198,7 @@ class LZAGGrid extends React.Component<any, any> {
     let res: any;
     try {
       res = await this._p1.promise;
+      this.setState({ rowData: res.data });
       return res.data;
     } catch (error) {
       console.error(error);
@@ -208,7 +226,7 @@ class LZAGGrid extends React.Component<any, any> {
 
   render() {
     const { rowData, columnDefs, defaultColDef, sideBar } = this.state;
-    const { localeText } = this.props;
+    const { localeText, pivotMode = false } = this.props;
     return (
       <div className="lz-ag-grid">
         <AgGridReact
@@ -225,6 +243,7 @@ class LZAGGrid extends React.Component<any, any> {
           enableRangeSelection={true}
           enableCharts={true}
           localeText={localeText}
+          pivotMode={pivotMode}
         ></AgGridReact>
       </div>
     );
