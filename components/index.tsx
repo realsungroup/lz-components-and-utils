@@ -14,5 +14,6 @@
 //   );
 // }
 
-export { default as DashboardPage } from './DashboardPage';
-export { default as AdvSearch } from './AdvSearch';
+export { default as DashboardPage } from "./DashboardPage";
+export { default as AdvSearch } from "./AdvSearch";
+export { default as BIGrid } from "./BIGrid";

@@ -1,22 +1,22 @@
-import http from 'lz-request/lib/http';
+import http from "lz-request/lib/http";
 
-import { getItem } from '.';
+import { getItem } from ".";
 
 interface CustomWindow extends Window {
   biConfig: any;
 }
 declare let window: CustomWindow;
 //bi 演示
-// http.setDefaultBaseURL('http://kingofdinner.realsun.me:8102/');
+// http.setDefaultBaseURL("http://kingofdinner.realsun.me:8102/");
 //powerworks 演示
-http.setDefaultBaseURL('http://kingofdinner.realsun.me:1201/');
+http.setDefaultBaseURL("http://kingofdinner.realsun.me:1201/");
 //finisar 项目内网
 //http.setDefaultBaseURL('http://10.108.2.66:1001/');
 // 请求拦截
 http.setRequestInterceptors(
   function(config) {
     // 请求头加上 token
-    const userInfo = JSON.parse(getItem('userInfo'));
+    const userInfo = JSON.parse(getItem("userInfo"));
 
     let token = userInfo && userInfo.AccessToken;
     let userCode = userInfo && userInfo.UserCode;
@@ -38,11 +38,11 @@ http.setResponseInterceptors(
     if (
       (res &&
         (res.error === 0 ||
-          res.error === '0' ||
+          res.error === "0" ||
           res.Error === 0 ||
-          res.Error === '0' ||
-          res.OpResult === 'Y')) ||
-      res === 'ok'
+          res.Error === "0" ||
+          res.OpResult === "Y")) ||
+      res === "ok"
     ) {
       return res;
     } else {
@@ -85,18 +85,18 @@ export const makeCancelable = promise => {
  * 5. orderby：排序
  * 6. ...
  */
-http.createApi('getFieldAggregateValue', {
-  method: 'get',
-  url: '/api/100/table/GetDataBySqlParts'
+http.createApi("getFieldAggregateValue", {
+  method: "get",
+  url: "/api/100/table/GetDataBySqlParts"
 });
 /**
  * 获取表格列定义数据
  * 参数：{ resid }
  * 1. resid：资源id
  */
-http.createApi('getTableColumnDefine', {
-  method: 'get',
-  url: '/api/100/table/RetrieveColumnsDefineByArray'
+http.createApi("getTableColumnDefine", {
+  method: "get",
+  url: "/api/100/table/RetrieveColumnsDefineByArray"
 });
 
 export default http;
