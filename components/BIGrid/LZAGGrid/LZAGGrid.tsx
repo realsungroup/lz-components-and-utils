@@ -93,7 +93,13 @@ class LZAGGrid extends React.Component<any, any> {
 
   getColumns = async props => {
     const httpParams: any = {};
-    const { resid, dblinkname, baseURL } = props || this.props;
+    const {
+      resid,
+      dblinkname,
+      baseURL,
+      isAllEnableRowGroup = false,
+      isAllEnableValue = false
+    } = props || this.props;
     if (baseURL) {
       httpParams.baseURL = baseURL;
     }
@@ -122,8 +128,8 @@ class LZAGGrid extends React.Component<any, any> {
         chartDataType: item.chartType,
         enablePivot: item.enablePivot,
         rowGroup: item.rowGroup,
-        enableRowGroup: item.enableRowGroup,
-        enableValue: item.enableValue,
+        enableRowGroup: isAllEnableRowGroup ? true : item.enableRowGroup,
+        enableValue: isAllEnableValue ? true : item.enableValue,
         aggFunc: item.aggFunc
       };
       //后台未配置filter

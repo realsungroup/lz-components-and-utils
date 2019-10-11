@@ -63,16 +63,22 @@ class BIGrid extends React.Component<any, any> {
 
   render() {
     const { loading, tabNames } = this.state;
-    const { gridProps, language, height = "100vh" } = this.props;
+    const {
+      gridProps,
+      language,
+      height = "100%",
+      isAllEnableValue = false,
+      isAllEnableRowGroup = false
+    } = this.props;
     let localeText = null;
     if (language === "zhCN") {
       localeText = zhCN;
     }
     return (
-      <div className="ag-theme-balham bi-grids">
+      <div className="ag-theme-balham bi-grids" style={{ height }}>
         <Spin spinning={loading}>
           <Tabs
-            style={{ height }}
+            style={{ height: "100%" }}
             defaultActiveKey={gridProps[0].resid.toString()}
             type="card"
           >
@@ -80,17 +86,19 @@ class BIGrid extends React.Component<any, any> {
               return (
                 <TabPane
                   tab={tabNames[index]}
-                  style={{ height }}
+                  style={{ height: "100%" }}
                   key={props.resid.toString()}
                   forceRender
                 >
-                  <div style={{ height, width: "100%" }}>
+                  <div style={{ height: "100%", width: "100%" }}>
                     <LZAGGrid
                       {...props}
                       onSetTabName={this.handleSetTabName}
                       onSetLoading={this.handleSetLoading}
                       index={index}
                       localeText={localeText}
+                      isAllEnableValue={isAllEnableValue}
+                      isAllEnableRowGroup={isAllEnableRowGroup}
                     />
                   </div>
                 </TabPane>

@@ -15,6 +15,8 @@ storiesOf("ag-grid表格数据组件", module).add("bigrid组件", () => (
       // { resid: "561545788771", cmswhere: "", keyValue: "" }
     ]}
     language="zhCN"
-    height={700}
+    height={600}
+    isAllEnableRowGroup={true}
+    isAllEnableValue={true}
   />
 ));
