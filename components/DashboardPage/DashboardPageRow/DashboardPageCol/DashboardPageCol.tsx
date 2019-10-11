@@ -1,18 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Icon, Tooltip, Modal } from 'antd';
-import DashboardChart from './DashboardChart';
-import Resizable from 're-resizable';
-import classNames from 'classnames';
-import AdvSearch from '../../../AdvSearch'
+import React from "react";
+import PropTypes from "prop-types";
+import { Icon, Tooltip, Drawer, Button, Modal } from "antd";
+import DashboardChart from "./DashboardChart";
+import Resizable from "re-resizable";
+import classNames from "classnames";
+import AdvSearch from "../../../AdvSearch";
+import BIGrid from "../../../BIGrid";
 
 /**
  * 仪表盘页面的列
  */
 export default class DashboardPageCol extends React.Component<any, any> {
   static propTypes = {
-    type: PropTypes.oneOf(['add', 'row']),
+    type: PropTypes.oneOf(["add", "row"]),
     onAddRow: PropTypes.func
+  };
+  state = {
+    isShowGrid: false,
+    drawerVisivble: false
   };
   handleDoSearch = (where, searchList) => {
     let {
@@ -35,7 +40,7 @@ export default class DashboardPageCol extends React.Component<any, any> {
     newRows[rowIndex].cols[colIndex].settingForm.where = where;
     newRows[rowIndex].cols[colIndex].settingForm.searchList = searchList;
     this.props.onSearch && this.props.onSearch(mode, newRows);
-  }
+  };
   handleColClick = e => {
     e.stopPropagation();
     const { selectedCol, colItem, rowItem, onActiveCol } = this.props;
@@ -54,12 +59,18 @@ export default class DashboardPageCol extends React.Component<any, any> {
   handleDeleteCol = () => {
     const { rowItem, colItem, onDeleteCol } = this.props;
     Modal.confirm({
-      title: '提示',
-      content: '您确定要删除该列吗？',
+      title: "提示",
+      content: "您确定要删除该列吗？",
       onOk: () => onDeleteCol && onDeleteCol(rowItem, colItem)
     });
   };
 
+  toggleIsShowGrid = () => {
+    this.setState({
+      // isShowGrid: !this.state.isShowGrid,
+      drawerVisivble: !this.state.drawerVisivble
+    });
+  };
   render() {
     const {
       mode,
@@ -71,21 +82,22 @@ export default class DashboardPageCol extends React.Component<any, any> {
       settingForm,
       showSearchBar
     } = this.props;
+    const { drawerVisivble } = this.state;
     const { fields, searchList } = colItem.settingForm;
-    const isShowSearchBar=(showSearchBar&&searchList&&Array.isArray(searchList)&&searchList.length >0);
-    const aDvFields = fields.map((item) => {
-    
-
-      return { value: item.id, label: item.text, control: "Input" }
-    }
-
-    );
+    const isShowSearchBar =
+      showSearchBar &&
+      searchList &&
+      Array.isArray(searchList) &&
+      searchList.length > 0;
+    const aDvFields = fields.map(item => {
+      return { value: item.id, label: item.text, control: "Input" };
+    });
     // 编辑列
-    if (mode === 'edit') {
+    if (mode === "edit") {
       return (
         <Resizable
-          className={classNames('dashboard-page-col', {
-            'dashboard-page-col--selected':
+          className={classNames("dashboard-page-col", {
+            "dashboard-page-col--selected":
               selectedCol && selectedCol.id === colItem.id
           })}
           size={{
@@ -119,26 +131,54 @@ export default class DashboardPageCol extends React.Component<any, any> {
         </Resizable>
       );
     }
-
     // 查看列
     return (
       <div>
-        {isShowSearchBar &&
+        {isShowSearchBar && (
           <div style={{ width: 500 }}>
-            <AdvSearch 
-            fields={aDvFields} 
-            initialSearchList={searchList} 
-            readOnly={true} 
-            onConfirm={this.handleDoSearch} />
-            </div>}
+            <AdvSearch
+              fields={aDvFields}
+              initialSearchList={searchList}
+              readOnly={true}
+              onConfirm={this.handleDoSearch}
+            />
+          </div>
+        )}
+        <div style={{ padding: 8 }}>
+          <Tooltip title="动态表格">
+            <Icon
+              style={{ fontSize: 20, color: "#63a0a7" }}
+              type="table"
+              onClick={this.toggleIsShowGrid}
+            />
+          </Tooltip>
+        </div>
         <DashboardChart
           style={{ height: colItem.height }}
           mode="view"
           {...colItem.props}
         />
-
+        {/* )} */}
+        <Drawer
+          visible={drawerVisivble}
+          onClose={this.toggleIsShowGrid}
+          width="100%"
+        >
+          <BIGrid
+            gridProps={[
+              {
+                resid: colItem.settingForm.resid,
+                baseURL: this.props.baseURL,
+                cmswhere: colItem.settingForm.where
+              }
+            ]}
+            language="zhCN"
+            height="calc(100vh - 48px)"
+            isAllEnableRowGroup={true}
+            isAllEnableValue={true}
+          />
+        </Drawer>
       </div>
-
     );
   }
 }
