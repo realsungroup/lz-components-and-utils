@@ -97,8 +97,16 @@ class BIGrid extends React.Component<any, any> {
                       onSetLoading={this.handleSetLoading}
                       index={index}
                       localeText={localeText}
-                      isAllEnableValue={isAllEnableValue}
-                      isAllEnableRowGroup={isAllEnableRowGroup}
+                      isAllEnableValue={
+                        props.isAllEnableValue === undefined
+                          ? isAllEnableValue
+                          : props.isAllEnableValue
+                      }
+                      isAllEnableRowGroup={
+                        props.isAllEnableRowGroup === undefined
+                          ? isAllEnableRowGroup
+                          : props.isAllEnableRowGroup
+                      }
                     />
                   </div>
                 </TabPane>

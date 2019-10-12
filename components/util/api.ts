@@ -9,7 +9,7 @@ declare let window: CustomWindow;
 //bi 演示
 // http.setDefaultBaseURL("http://kingofdinner.realsun.me:8102/");
 //powerworks 演示
-http.setDefaultBaseURL("http://kingofdinner.realsun.me:1201/");
+// http.setDefaultBaseURL("http://kingofdinner.realsun.me:1201/");
 //finisar 项目内网
 //http.setDefaultBaseURL('http://10.108.2.66:1001/');
 // 请求拦截
