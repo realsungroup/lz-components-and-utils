@@ -92,7 +92,7 @@ class BIGrid extends React.Component<any, any> {
                   key={props.resid.toString()}
                   forceRender
                 >
-                  <div style={{ height: containerHeight, width: "100%" }}>
+                  <div style={{ height: containerHeight - 56, width: "100%" }}>
                     <LZAGGrid
                       {...props}
                       onSetTabName={this.handleSetTabName}
