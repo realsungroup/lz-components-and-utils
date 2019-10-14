@@ -7,6 +7,7 @@ import "ag-grid-enterprise/chartsModule";
 import "./style";
 import PropTypes from "prop-types";
 import http, { makeCancelable } from "../../util/api";
+import { message } from "antd";
 
 //中位值函数
 const midFunc = (values: Array<number>) => {
@@ -37,6 +38,7 @@ const countDistinctFunc = values => {
 
 interface LZAGGrid {
   gridApi: any;
+  p4?: any;
 }
 
 interface agColumnDef {
@@ -61,6 +63,16 @@ interface agColumnDef {
 class LZAGGrid extends React.Component<any, any> {
   static propTypes = {
     resid: PropTypes.oneOf([PropTypes.number, PropTypes.string]).isRequired
+  };
+  // procedure
+  static defaultProps = {
+    dataSource: "table",
+    procedureParams: {},
+    cmswhere: "",
+    cparm1: "",
+    cparm2: "",
+    isAllEnableRowGroup: false,
+    isAllEnableValue: false
   };
 
   constructor(props) {
@@ -90,6 +102,102 @@ class LZAGGrid extends React.Component<any, any> {
       this.props.onSetLoading && this.props.onSetLoading(false);
     }
   }
+
+  getDataByProcedure = async () => {
+    const { baseURL, procedureParams } = this.props;
+    const {
+      resid,
+      isAllEnableRowGroup = false,
+      isAllEnableValue = false
+    } = this.props;
+    this.p4 = makeCancelable(
+      http({
+        baseURL: baseURL ? baseURL : ""
+      }).getRecordsByProcedure({ resid, ...procedureParams })
+    );
+    try {
+      const res = await this.p4.promise;
+      let columns = res.columnsList;
+      let data = res.data;
+      let columnDefs = [];
+      for (const key in columns) {
+        if (columns.hasOwnProperty(key)) {
+          const element = columns[key];
+          columnDefs.push(element);
+        }
+      }
+      columnDefs = columnDefs.map((item, index) => {
+        let column: agColumnDef = {
+          field: item.ColDispName,
+          headerName: item.ColDispName,
+          // width: item.CS_SHOW_WIDTH,
+          resizable: true,
+          pivot: false,
+          sortable: true,
+          checkboxSelection: false,
+          filter: item.filter,
+          filterParams: {},
+          headerCheckboxSelection: false,
+          chartDataType: item.chartType,
+          enablePivot: item.enablePivot,
+          rowGroup: item.rowGroup,
+          enableRowGroup: isAllEnableRowGroup ? true : item.enableRowGroup,
+          enableValue: isAllEnableValue ? true : item.enableValue,
+          aggFunc: item.aggFunc
+        };
+        //后台未配置filter
+        if (!column.filter) {
+          switch (item.ColType) {
+            case 4:
+            case 8:
+              column.filter = "agDateColumnFilter";
+              break;
+            case 1:
+            case 5:
+              column.filter = "agTextColumnFilter";
+              break;
+            default:
+              column.filter = "agNumberColumnFilter";
+              break;
+          }
+        }
+        // filter为日期filter，则使用自定义的comparator
+        if (column.filter === "agDateColumnFilter") {
+          column.filterParams = {
+            // provide comparator function
+            comparator: function(filterLocalDateAtMidnight, cellValue) {
+              var dateAsString = cellValue;
+              if (dateAsString == null) return 0;
+
+              // In the example application, dates are stored as dd/mm/yyyy
+              // We create a Date object for comparison against the filter date
+              var dateParts = dateAsString.split("-");
+              var day = Number(dateParts[2]);
+              var month = Number(dateParts[1]) - 1;
+              var year = Number(dateParts[0]);
+              var cellDate = new Date(year, month, day);
+              // Now that both parameters are Date objects, we can compare
+              if (cellDate < filterLocalDateAtMidnight) {
+                return -1;
+              } else if (cellDate > filterLocalDateAtMidnight) {
+                return 1;
+              } else {
+                return 0;
+              }
+            }
+          };
+        }
+        if (index === 0) {
+          column.checkboxSelection = true;
+          column.headerCheckboxSelection = true;
+        }
+        return column;
+      });
+      this.setState({ columnDefs, rowData: data });
+    } catch (error) {
+      message.error(error.message);
+    }
+  };
 
   getColumns = async props => {
     const httpParams: any = {};
@@ -182,19 +290,19 @@ class LZAGGrid extends React.Component<any, any> {
     });
     this.props.onSetTabName &&
       this.props.onSetTabName(res.ResourceData.ResName, this.props.index);
-    return columns;
+    this.setState({ columnDefs: columns });
   };
 
   _p1: any;
   getRowData = async () => {
-    const { cmswhere, keyValue, baseURL, cparm1, cparm2 } = this.props;
+    const { resid, cmswhere, keyValue, baseURL, cparm1, cparm2 } = this.props;
     const httpParams: any = {};
     if (baseURL) {
       httpParams.baseURL = baseURL;
     }
     this._p1 = makeCancelable(
       http(httpParams).getTable({
-        resid: this.props.resid,
+        resid,
         cmswhere,
         key: keyValue,
         cparm1,
@@ -218,17 +326,23 @@ class LZAGGrid extends React.Component<any, any> {
       this.props.onSetLoading &&
       this.props.onSetLoading(true);
     this.setState({ loading: true });
-    const columnDefs = await this.getColumns(this.props);
-    const rowData = await this.getRowData();
+    const { dataSource } = this.props;
+    if (dataSource === "table") {
+      await this.getColumns(this.props);
+      await this.getRowData();
+    } else if (dataSource === "procedure") {
+      await this.getDataByProcedure();
+    }
     params.api.addAggFunc("mid", midFunc);
     params.api.addAggFunc("countDistinct", countDistinctFunc);
-    this.setState({ columnDefs, rowData });
     this.props.index === 0 &&
       this.props.onSetLoading &&
       this.props.onSetLoading(false);
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    console.log(this.props);
+  }
 
   render() {
     const { rowData, columnDefs, defaultColDef, sideBar } = this.state;

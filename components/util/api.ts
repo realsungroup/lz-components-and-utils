@@ -99,4 +99,9 @@ http.createApi("getTableColumnDefine", {
   url: "/api/100/table/RetrieveColumnsDefineByArray"
 });
 
+http.createApi("getRecordsByProcedure", {
+  method: "get",
+  url: "/api/200/table/RetrieveProcedure"
+});
+
 export default http;

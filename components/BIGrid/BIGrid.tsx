@@ -4,7 +4,7 @@ import "ag-grid-community/dist/styles/ag-theme-balham.css";
 import "ag-grid-enterprise";
 import "ag-grid-enterprise/chartsModule";
 import "./style";
-import PropTypes from "prop-types";
+import PropTypes, { element } from "prop-types";
 import { Spin, Tabs } from "antd";
 import LZAGGrid from "./LZAGGrid";
 import zhCN from "./locales/zh-CN";
@@ -13,6 +13,7 @@ const { TabPane } = Tabs;
 
 interface BIGrid {
   // gridApi: any;
+  bigrid?: any;
 }
 
 interface agColumnDef {
@@ -35,7 +36,6 @@ interface agColumnDef {
 
 class BIGrid extends React.Component<any, any> {
   static propTypes = {
-    resids: PropTypes.array.isRequired,
     gridProps: PropTypes.array
   };
 
@@ -43,11 +43,14 @@ class BIGrid extends React.Component<any, any> {
     super(props);
     this.state = {
       tabNames: [], //tab页显示的名字
+      containerHeight: 0,
       loading: false
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.setState({ containerHeight: this.bigrid.clientHeight });
+  }
 
   handleSetTabName = (name, index) => {
     let tabNames = [...this.state.tabNames];
@@ -62,7 +65,7 @@ class BIGrid extends React.Component<any, any> {
   };
 
   render() {
-    const { loading, tabNames } = this.state;
+    const { loading, tabNames, containerHeight } = this.state;
     const {
       gridProps,
       language,
@@ -75,22 +78,21 @@ class BIGrid extends React.Component<any, any> {
       localeText = zhCN;
     }
     return (
-      <div className="ag-theme-balham bi-grids" style={{ height }}>
+      <div
+        className="ag-theme-balham bi-grids"
+        style={{ height }}
+        ref={element => (this.bigrid = element)}
+      >
         <Spin spinning={loading}>
-          <Tabs
-            style={{ height: "100%" }}
-            defaultActiveKey={gridProps[0].resid.toString()}
-            type="card"
-          >
+          <Tabs defaultActiveKey={gridProps[0].resid.toString()} type="card">
             {gridProps.map((props, index) => {
               return (
                 <TabPane
-                  tab={tabNames[index]}
-                  style={{ height: "100%" }}
+                  tab={tabNames[index] || props.resid}
                   key={props.resid.toString()}
                   forceRender
                 >
-                  <div style={{ height: "100%", width: "100%" }}>
+                  <div style={{ height: containerHeight, width: "100%" }}>
                     <LZAGGrid
                       {...props}
                       onSetTabName={this.handleSetTabName}
