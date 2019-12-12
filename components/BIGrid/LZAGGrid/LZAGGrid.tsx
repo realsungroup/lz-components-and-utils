@@ -36,6 +36,10 @@ const countDistinctFunc = values => {
   return _values.length;
 };
 
+const returnFormatter = params => {
+  return params.value ? params.value.replace(/\r?\n|\r/gm, ",") : params.value;
+};
+
 interface LZAGGrid {
   gridApi: any;
   p4?: any;
@@ -58,6 +62,7 @@ interface agColumnDef {
   enableValue: boolean;
   aggFunc: string;
   filterParams: object;
+  valueFormatter?: Function;
 }
 
 class LZAGGrid extends React.Component<any, any> {
@@ -236,6 +241,8 @@ class LZAGGrid extends React.Component<any, any> {
         chartDataType: item.chartType,
         enablePivot: item.enablePivot,
         rowGroup: item.rowGroup,
+        valueFormatter:
+          item.formatter === "ag-trimenter" ? returnFormatter : null,
         enableRowGroup: isAllEnableRowGroup ? true : item.enableRowGroup,
         enableValue: isAllEnableValue ? true : item.enableValue,
         aggFunc: item.aggFunc
@@ -341,7 +348,7 @@ class LZAGGrid extends React.Component<any, any> {
   };
 
   componentDidMount() {
-    console.log(this.props);
+    // console.log(this.props);
   }
 
   render() {
