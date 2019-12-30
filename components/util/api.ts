@@ -103,5 +103,20 @@ http.createApi("getRecordsByProcedure", {
   method: "get",
   url: "/api/200/table/RetrieveProcedure"
 });
+/**
+ * startWebSocketService
+ */
+http.createApi("startWebSocketService", {
+  method: "get",
+  url: "/api/Socket/StartWebSocketService"
+});
+
+/**
+ * getWebSocketService
+ */
+http.createApi("getWebSocketService", {
+  method: "get",
+  url: "/api/Socket/GetWebSocketService"
+});
 
 export default http;
