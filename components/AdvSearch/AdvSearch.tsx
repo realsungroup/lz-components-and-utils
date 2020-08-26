@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, Icon, Input, Button } from 'antd';
+import { Select, Icon, Input, Button, Tooltip } from 'antd';
 import { defaultProps, propTypes } from './propTypes';
 import { read } from 'fs';
 
@@ -230,9 +230,11 @@ class AdvSearch extends React.Component<any, any> {
               onChange={value => this.handleSelectFieldChange(value, index)}
             >
               {fields.map(fieldItem => (
-                <Option key={fieldItem.value} value={fieldItem.value}>
-                  {fieldItem.label}
-                </Option>
+                  <Option key={fieldItem.value} value={fieldItem.value}>
+                    <Tooltip placement="topLeft" title={fieldItem.label}>
+                      <div>{fieldItem.label}</div>
+                    </Tooltip>
+                  </Option>
               ))}
             </Select>
             <Select
