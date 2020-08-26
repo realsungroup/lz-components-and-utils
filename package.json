@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "start-storybook",
     "compile": "antd-tools run compile",
-    "release": "hi-pkg-scripts release master"
+    "release": "npm run compile && hi-pkg-scripts release master"
   },
   "repository": {
     "type": "git",
