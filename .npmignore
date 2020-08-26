@@ -1,6 +1,0 @@
-.storybook/
-components/
-node_modules/
-scripts/
-.babelrc
-.gitignore
