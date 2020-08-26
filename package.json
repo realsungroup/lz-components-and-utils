@@ -79,5 +79,13 @@
     "sockjs-client": "^1.4.0",
     "style-loader": "^0.23.1",
     "wangeditor": "^3.1.1"
+  },
+  "hi-pkg-scripts": {
+    "release": {
+      "generateChangelog": true
+    }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }
