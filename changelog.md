@@ -1,3 +1,6 @@
+## Release v1.7.1
+- update
+
 ## Release v1.7.0
 - package.json:更新 package.json 文件配置
 - feat:添加部署命令
