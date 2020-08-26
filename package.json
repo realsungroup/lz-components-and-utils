@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "start-storybook",
     "compile": "antd-tools run compile",
-    "pub": "node scripts/publish.js"
+    "release": "hi-pkg-scripts release master"
   },
   "repository": {
     "type": "git",
@@ -45,6 +45,7 @@
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.5",
     "chalk": "^2.4.2",
+    "hi-pkg-scripts": "^0.6.0",
     "jest": "^24.7.1",
     "lz-request": "^0.9.3",
     "react-docgen-typescript-loader": "^3.1.0",
