@@ -1,3 +1,6 @@
+## Release v1.8.0
+- feat:AdvSearch 组件添加 onChange 回调函数
+
 ## Release v1.7.2
 
 ## Release v1.7.1
