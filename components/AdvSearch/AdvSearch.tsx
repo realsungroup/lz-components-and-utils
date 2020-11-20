@@ -164,7 +164,7 @@ class AdvSearch extends React.Component<any, any> {
       (searchItem) => searchItem.field && searchItem.compareSymbol
     );
     if (!searchArr.length) {
-      return this.props.onConfirm && this.props.onConfirm('');
+      return '';
     }
 
     const whereArr = [];

@@ -36,10 +36,15 @@ class AdvSearchDemo extends React.Component {
     searchList: searchList,
   };
 
-  handleChange = (search, searchList) => {
-    console.log('search:', search);
+  handleChange = (where, searchList) => {
+    console.log('onChange');
     this.setState({ searchList });
   };
+
+  handleConfirm = () => {
+    console.log('onConfirm');
+  }
+  
 
   render() {
     const { searchList } = this.state;
@@ -48,6 +53,7 @@ class AdvSearchDemo extends React.Component {
         fields={testFields}
         initialSearchList={searchList}
         onChange={this.handleChange}
+        onConfirm={this.handleConfirm}
       />
     );
   }
