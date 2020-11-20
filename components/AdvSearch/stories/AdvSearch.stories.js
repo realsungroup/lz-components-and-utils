@@ -8,31 +8,53 @@ const testFields = [
   {
     label: '姓名',
     value: 'name',
-    control: 'Input'
+    control: 'Input',
   },
   {
     label: '年龄',
     value: 'age',
-    control: 'Input'
+    control: 'Input',
   },
   {
     label: '性别',
     value: 'sex',
-    control: 'Input'
-  }
+    control: 'Input',
+  },
 ];
-const searchList= [
-      {
-        logicSymbol: 'and',
-        compareSymbol: '=',
-        field: 'yearmonth',
-        control: 'Input',
-        value: '201908'
-      }
-    ] // 搜索列表
+const searchList = [
+  {
+    logicSymbol: 'and',
+    compareSymbol: '=',
+    field: 'yearmonth',
+    control: 'Input',
+    value: '201908',
+  },
+]; // 搜索列表
+
+class AdvSearchDemo extends React.Component {
+  state = {
+    searchList: searchList,
+  };
+
+  handleChange = (searchList) => {
+    console.log('111')
+    this.setState({ searchList });
+  };
+
+  render() {
+    const { searchList } = this.state;
+    return (
+      <AdvSearch
+        fields={testFields}
+        initialSearchList={searchList}
+        onChange={this.handleChange}
+      />
+    );
+  }
+}
 
 storiesOf('AdvSearch 高级搜索', module).add('AdvSearch', () => (
   <div style={{ width: 500 }}>
-    <AdvSearch fields={testFields}  initialSearchList={searchList}/>
+    <AdvSearchDemo></AdvSearchDemo>
   </div>
 ));

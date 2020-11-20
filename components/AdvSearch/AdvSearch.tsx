@@ -62,26 +62,23 @@ class AdvSearch extends React.Component<any, any> {
   }
   componentDidMount = () => { };
   componentWillReceiveProps = (nextProps) => {
-    console.log("nextProps");
-    console.log(nextProps);
     this.setState({ searchList: this.getInitialSearchList(nextProps) });
-
   }
   componentWillUnmount = () => { };
 
   handleAddSearchItem = () => {
+    const newSearchList = [...this.state.searchList, {
+      logicSymbol: 'and',
+      compareSymbol: '',
+      field: '',
+      control: 'Input',
+      value: ''
+    }];
     this.setState({
-      searchList: [
-        ...this.state.searchList,
-        {
-          logicSymbol: 'and',
-          compareSymbol: '',
-          field: '',
-          control: 'Input',
-          value: ''
-        }
-      ]
+      searchList: newSearchList
     });
+    const { onChange } = this.props;
+    onChange && onChange(newSearchList);
   };
 
   handleSwitchLoginSymbol = index => {
@@ -97,7 +94,7 @@ class AdvSearch extends React.Component<any, any> {
 
   handleSelectFieldChange = (value, index) => {
     const { searchList } = this.state;
-    const { fields } = this.props;
+    const { fields, onChange } = this.props;
     const fieldIndex = fields.findIndex(fieldItem => {
       if (fieldItem.value === value) {
         return true;
@@ -112,6 +109,7 @@ class AdvSearch extends React.Component<any, any> {
     const newSearchList = [...searchList];
     newSearchList.splice(index, 1, newSearchItem);
     this.setState({ searchList: newSearchList });
+    onChange && onChange(newSearchList);
   };
 
   handleCompareSymbolChange = (value, index) => {
@@ -120,6 +118,8 @@ class AdvSearch extends React.Component<any, any> {
     const newSearchList = [...searchList];
     newSearchList.splice(index, 1, newSearchItem);
     this.setState({ searchList: newSearchList });
+    const { onChange } = this.props;
+    onChange && onChange(newSearchList);
   };
 
   handleValueControlChange = (value, searchItem) => {
@@ -129,6 +129,8 @@ class AdvSearch extends React.Component<any, any> {
     const newSearchList = [...searchList];
     newSearchList.splice(searchItemIndex, 1, newSearchItem);
     this.setState({ searchList: newSearchList });
+    const { onChange } = this.props;
+    onChange && onChange(newSearchList);
   };
   handleDoSearch = () => {
     this.handleConfirm();
@@ -184,6 +186,9 @@ class AdvSearch extends React.Component<any, any> {
     }
 
     this.setState({ searchList: newSearchList });
+
+    const { onChange } = this.props;
+    onChange && onChange(newSearchList);
   };
 
   renderValueControl = searchItem => {

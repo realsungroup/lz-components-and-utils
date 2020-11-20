@@ -84,5 +84,10 @@ export const propTypes = {
    * 确定按钮文本（英文）
    * 默认：'Confirm'
    */
-  enCofirmText: PropTypes.string
+  enCofirmText: PropTypes.string,
+
+  /**
+   * searchList 发生改变时的回调
+   */
+  onChange: PropTypes.func,
 };
