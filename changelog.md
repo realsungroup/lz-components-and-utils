@@ -1,3 +1,6 @@
+## Release v1.9.1
+- fix:修复 AdvSearch 组件 onChange 回调触发时 onConfirm 也会触发的 bug
+
 ## Release v1.9.0
 - feat:AdvSearch 高级搜索的 onChange 回调添加 where 参数
 
