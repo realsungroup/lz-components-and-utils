@@ -36,8 +36,8 @@ class AdvSearchDemo extends React.Component {
     searchList: searchList,
   };
 
-  handleChange = (searchList) => {
-    console.log('111')
+  handleChange = (search, searchList) => {
+    console.log('search:', search);
     this.setState({ searchList });
   };
 
